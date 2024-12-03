@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteWarehouse, listWarehousesByCompanyId } from "../services/WarehouseService";
+import { ToastContainer, toast } from "react-toastify";
 
 const ManageWarehouses = () => {
   const navigate = useNavigate();
@@ -18,7 +19,8 @@ const ManageWarehouses = () => {
     );
   };
   const handleClick = (warehouse) => {
-    navigate("/viewWarehouse", { state: { warehouse } });
+    // navigate("/viewWarehouse", { state: { warehouse } });
+    navigate(`/viewWarehouse/${warehouse.id}`);
   };
   const addWarehouse = () => {
     navigate("/addWarehouse");
@@ -31,15 +33,18 @@ const ManageWarehouses = () => {
   };
 
   const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this item?")) {
     deleteWarehouse(id).then((response)=>{
       getWarehouses();
-    })
+      toast.success("Supplier deleted successfully!");
+    })}
   };
 
   return (
     <div className="container">
       <h2 className="container mb-3">Warehouse Lists</h2>
       <div className="m-5">
+      <ToastContainer />
         <table className="table table-hover table-bordered">
           <thead>
             <tr key={"header"}>

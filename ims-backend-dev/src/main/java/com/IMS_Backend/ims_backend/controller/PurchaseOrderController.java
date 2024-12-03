@@ -40,6 +40,14 @@ public class PurchaseOrderController {
 		
 	}
 	
+	
+	@GetMapping("/posByCompany/{id}")
+	public ResponseEntity<List<PurchaseOrder>> getPosByCompany(@PathVariable("id") String name){
+		List<PurchaseOrder> allPurchaseOrders = purchaseOrderService.getOrdersByCompany(name);
+		return new ResponseEntity<>(allPurchaseOrders, HttpStatus.CREATED);
+	}
+	
+	
 	@GetMapping
 	public ResponseEntity<List<PurchaseOrder>> getAllPurchaseOrders(){
 		List<PurchaseOrder> allPurchaseOrders = purchaseOrderService.getAllOrders();

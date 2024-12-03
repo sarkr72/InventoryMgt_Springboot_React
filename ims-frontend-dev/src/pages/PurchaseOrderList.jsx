@@ -9,7 +9,7 @@ import {
   deletePurchaseOrder,
 } from "../services/PurchaseOrderService";
 
-const ViewPurchaseOrder = () => {
+const PurchaseOrderList = () => {
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [openUpdateModal, setUpdateOpenModal] = useState(false);
   const [orders, setOrders] = useState([
@@ -32,10 +32,11 @@ const ViewPurchaseOrder = () => {
 
   const handleDelete = (id) => {
     deletePurchaseOrder(id)
-      .then((response) => console.log(response))
+      .then((response) => {
+        console.log(response);
+        getOrders();
+      })
       .catch((error) => console.log(error));
-
-    getOrders();
   };
 
   const getOrders = () => {
@@ -110,7 +111,7 @@ const ViewPurchaseOrder = () => {
         <CreatePurchaseOrder
           show={openCreateModal}
           onHide={() => setOpenCreateModal(false)}
-          getOrders={getOrders()}
+          getOrders={() => getOrders()}
         />
       </div>
       <UpdatePurchaseOrder
@@ -265,4 +266,4 @@ const UpdatePurchaseOrder = (props) => {
   );
 };
 
-export default ViewPurchaseOrder;
+export default PurchaseOrderList;

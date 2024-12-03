@@ -42,7 +42,11 @@ public class ProductController {
 		return new ResponseEntity<>(searchedProduct, HttpStatus.CREATED);
 	}
 	
-	
+	  @GetMapping("/company/{companyId}")
+	    public List<Product> getProductsByCompanyId(@PathVariable Long companyId) {
+	        return productService.getProductsByCompanyId(companyId);
+	    }
+	  
 	@GetMapping
 	public ResponseEntity<List<Product>> getAllProducts(){
 		List<Product> allProducts = productService.getAllProducts();

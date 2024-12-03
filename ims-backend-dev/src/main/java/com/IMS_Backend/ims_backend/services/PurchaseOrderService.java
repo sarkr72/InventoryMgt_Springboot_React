@@ -13,6 +13,8 @@ public interface PurchaseOrderService {
 	
 	List<PurchaseOrder> getAllOrders();
 	
+	List<PurchaseOrder> getOrdersByCompany(String company);
+	
 	PurchaseOrder updateOrder(Long orderID, PurchaseOrder order);
 	
 	void deleteOrderById(Long orderId);

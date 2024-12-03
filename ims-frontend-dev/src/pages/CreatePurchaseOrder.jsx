@@ -14,9 +14,9 @@ const CreatePurchaseOrder = (props) => {
     unitPrice: 0,
     po: "",
     productNames: [""],
-    employee: { id: 1 },
-    supplier: { id: 2 },
-    company: { id: 1 },
+    employee: "",
+    supplier: "",
+    company: "",
   });
 
   const [products, setProducts] = useState([
@@ -49,13 +49,12 @@ const CreatePurchaseOrder = (props) => {
     createPurchaseOrder(data)
       .then((response) => {
         console.log(response.data);
+        props.onHide();
+        props.getOrders();
       })
       .catch((err) => {
         alert(err);
       });
-
-    props.onHide();
-    props.getOrders();
   };
 
   const handleChange = (e) => {
@@ -89,23 +88,15 @@ const CreatePurchaseOrder = (props) => {
           <Modal.Title>Create purchase order</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form id="createPO">
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Product:</Form.Label>
-              <Form.Select>
-                <option>Select a product</option>
-                {products.map((product, index) => (
-                  <option
-                    value={product.name}
-                    key={index}
-                    name="productNames"
-                    onChange={handleChange}
-                  >
-                    {" "}
-                    {product.name}
-                  </option>
-                ))}
-              </Form.Select>
+              <Form.Label>Name:</Form.Label>
+              <Form.Control
+                type="text"
+                name="po"
+                value={data.po}
+                onChange={handleChange}
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Date:</Form.Label>
@@ -162,7 +153,7 @@ const CreatePurchaseOrder = (props) => {
                   <button
                     className="btn btn-secondary"
                     type="button"
-                    onClick={() => setCount(count + 1)}
+                    onClick={() => setCount((c) => c + 1)}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

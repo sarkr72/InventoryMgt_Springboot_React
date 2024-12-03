@@ -1,22 +1,16 @@
 package com.IMS_Backend.ims_backend.model;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,7 +21,7 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "name")
+	@Column(name = "name", unique=true)
 	private String name;
 
 	@Column(name = "category")
@@ -39,6 +33,10 @@ public class Product {
 	@Column(name = "unitPrice")
 	private double unitPrice;
 
+	@ManyToOne
+    @JoinColumn(name = "company_id", nullable=false)
+	@JsonIgnoreProperties({"products", "address", "contact", "employees", "warehouses", "suppliers", "companyId"})
+	private Company company;
 	
 
 //	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -53,13 +51,16 @@ public class Product {
 	}
 
 
-public Product(String name, String category, int restockLevel, double unitPrice) {
+public Product(String name, String category, int restockLevel, double unitPrice, Company company) {
 	super();
 	this.name = name;
 	this.category = category;
 	this.restockLevel = restockLevel;
 	this.unitPrice = unitPrice;
+	this.company = company;
 }
+
+
 
 
 //	public Set<ProductLocation> getProductLocations() {
@@ -77,6 +78,16 @@ public Product(String name, String category, int restockLevel, double unitPrice)
 //	public void setPos(Set<PurchaseOrder> pos) {
 //		this.pos = pos;
 //	}
+
+
+	public Company getCompany() {
+	return company;
+}
+
+
+public void setCompany(Company company) {
+	this.company = company;
+}
 
 
 	public Long getId() {

@@ -4,6 +4,8 @@ const REST_API_BASE_URL = "http://localhost:8080/api/products";
 
 export const productsList = () => axios.get(REST_API_BASE_URL);
 
+export const productsListByCompany = (id) => axios.get(REST_API_BASE_URL + "/company/" + id);
+
 export const createProduct = (product) => axios.post(REST_API_BASE_URL, product);
 
 export const getProduct = (productID) => axios.get(REST_API_BASE_URL + '/' + productID);

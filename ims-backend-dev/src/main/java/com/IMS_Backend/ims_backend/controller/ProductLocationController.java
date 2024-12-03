@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.IMS_Backend.ims_backend.model.ProductLocation;
@@ -23,46 +24,52 @@ import com.IMS_Backend.ims_backend.services.ProductLocationService;
 @RequestMapping("/api/productLocations")
 public class ProductLocationController {
 
-		@Autowired
-		private ProductLocationService plService;
-		
-		
-		@PostMapping
-	    public ResponseEntity<ProductLocation> createcompany(@RequestBody ProductLocation company){
-			ProductLocation savedcompany = plService.createProductLocaiton(company);
-	        return new ResponseEntity<>(savedcompany, HttpStatus.CREATED);
-	    }
-		
-		@GetMapping("/{id}")
-		public ResponseEntity<ProductLocation> getcompany(@PathVariable("id") Long id){
-			ProductLocation company = plService.getProductLocationById(id);
-			
-			return new ResponseEntity<>(company, HttpStatus.CREATED);
-		}
-		
-		
-		@GetMapping
-		public ResponseEntity<List<ProductLocation>> getAllcompanys(){
-			List<ProductLocation> companys = plService.getAllProductLocations();
-			
-			return ResponseEntity.ok(companys);
-		}
-		
-		@PutMapping("/{id}")
-		public ResponseEntity<ProductLocation> updatecompany(@PathVariable("id") Long id, @RequestBody ProductLocation company){
-			ProductLocation updatedcompany = plService.updateProductLocation(id, company);
-			
-			return new ResponseEntity<>(updatedcompany, HttpStatus.CREATED);
-		}
-		
-		
-		@DeleteMapping("/{id}")
-		public ResponseEntity<String> deletecompany(@PathVariable("id") Long id){
-			plService.deleteProductLocationById(id);
-			
-			return ResponseEntity.ok("company deleted successfully");
-		}
-		
-		
+	@Autowired
+	private ProductLocationService plService;
+
+	@PostMapping
+	public ResponseEntity<ProductLocation> createcompany(@RequestBody ProductLocation company) {
+		ProductLocation savedcompany = plService.createProductLocaiton(company);
+		return new ResponseEntity<>(savedcompany, HttpStatus.CREATED);
 	}
 
+	@GetMapping("/{id}")
+	public ResponseEntity<ProductLocation> getcompany(@PathVariable("id") Long id) {
+		ProductLocation company = plService.getProductLocationById(id);
+
+		return new ResponseEntity<>(company, HttpStatus.CREATED);
+	}
+
+	@GetMapping("/plByLocation")
+	public List<ProductLocation> getLocations(@RequestParam int row, @RequestParam int col, @RequestParam String wh, @RequestParam String company) {
+		return plService.getProductLocationsByLocation(row, col, wh, company);
+	}
+	
+	@GetMapping("/plByProduct")
+	public List<ProductLocation> getPLocations(@RequestParam("product") String product) {
+		return plService.getProductLocationsByProduct(product);
+	}
+
+	@GetMapping
+	public ResponseEntity<List<ProductLocation>> getAllcompanys() {
+		List<ProductLocation> companys = plService.getAllProductLocations();
+
+		return ResponseEntity.ok(companys);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<ProductLocation> updatecompany(@PathVariable("id") Long id,
+			@RequestBody ProductLocation company) {
+		ProductLocation updatedcompany = plService.updateProductLocation(id, company);
+
+		return new ResponseEntity<>(updatedcompany, HttpStatus.CREATED);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deletecompany(@PathVariable("id") Long id) {
+		plService.deleteProductLocationById(id);
+
+		return ResponseEntity.ok("company deleted successfully");
+	}
+
+}

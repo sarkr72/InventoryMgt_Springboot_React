@@ -17,6 +17,7 @@ const AddProduct = () => {
     category: "",
     restockLevel: "",
     unitPrice: "",
+    company: {id: localStorage.getItem("companyId")}
   });
 
 

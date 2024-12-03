@@ -62,5 +62,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
 		purchaseOrderRepo.delete(deleteOrder);
 		
 	}
+
+	@Override
+	public List<PurchaseOrder> getOrdersByCompany(String company) {
+		return purchaseOrderRepo.findByCompany(company);
+	}
 	
 }

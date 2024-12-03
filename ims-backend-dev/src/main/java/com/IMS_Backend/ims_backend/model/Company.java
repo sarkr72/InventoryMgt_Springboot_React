@@ -48,6 +48,10 @@ public class Company {
 	@JsonIgnoreProperties("company")
 	private List<Warehouse> warehouses= new ArrayList<>();
 	
+	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnoreProperties("company")
+	private List<Product> products= new ArrayList<>();
+	
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
 	@JoinTable(name = "supplier_company", joinColumns = @JoinColumn(name = "company_id"), inverseJoinColumns = @JoinColumn(name = "supplier_id"))
 	@JsonIgnoreProperties("companies")

@@ -41,10 +41,9 @@ public class LocationServiceImpl implements LocationService{
 		savedLocation.setEmpty(location.isEmpty());
 		savedLocation.setWarehouse(location.getWarehouse());   
 		savedLocation.setMaxCapacity(location.getMaxCapacity());
-		System.out.println("Location is empty: " + location.isEmpty());
-		 System.out.println("Updating Location - Row: " + location.getRow());
-		    System.out.println("Updating Location - Col: " + location.getCol());
-		    System.out.println("Is Empty: " + location.isEmpty());
+		savedLocation.setStock(location.getStock());
+		savedLocation.setAvailable(location.getAvailable());
+		
 //		if (location.getProductLocations() != null) {
 //			savedLocation.getProductLocations().addAll(location.getProductLocations());
 //		}

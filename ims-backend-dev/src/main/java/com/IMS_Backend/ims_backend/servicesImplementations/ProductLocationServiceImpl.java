@@ -47,6 +47,7 @@ public class ProductLocationServiceImpl implements ProductLocationService{
 		savedLocation.setExpDate(productLocation.getExpDate());
 		savedLocation.setQuantity(productLocation.getQuantity());
 		savedLocation.setPo(productLocation.getPo());
+		savedLocation.setCompany(productLocation.getCompany());
 		
 		
 		ProductLocation updatedLocation = productLocationRepository.save(savedLocation);
@@ -60,5 +61,17 @@ public class ProductLocationServiceImpl implements ProductLocationService{
 				.orElseThrow(() -> new NotFoundException("Company is not found with id: " + id));
 		productLocationRepository.delete(productLocation);
 	}
+
+		@Override
+		public List<ProductLocation> getProductLocationsByLocation(int row, int col, String wh, String company) {
+		    String rowColPattern = String.format("Row: %s Col: %s %s%%", row, col, wh);
+		    return productLocationRepository.findByRowColWhAndCompany(rowColPattern, company);
+		}
+
+		@Override
+		public List<ProductLocation> getProductLocationsByProduct(String product) {
+			return productLocationRepository.findByProductName(product);
+		}
+
 
 }

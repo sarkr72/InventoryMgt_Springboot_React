@@ -8,6 +8,7 @@ import {
   createProductLocation,
   deleteProductLocation,
   listProductLocations,
+  listProductLocationsByProduct,
   updateProductLocation,
 } from "../services/ProductLocations";
 import { listWarehouses } from "../services/WarehouseService";
@@ -36,7 +37,7 @@ const ProductInventory = () => {
     supplier: "",
     quantity: "",
     unitPrice: "",
-    totalPrice: "",
+    totalprice: "",
     mfgDate: "",
     expDate: "",
     location: "",
@@ -58,11 +59,15 @@ const ProductInventory = () => {
   }, []);
 
   const getProductInventory = () => {
-    listProductLocations()
+    listProductLocationsByProduct(product.name)
+    // listProductLocations()
       .then((response) => {
         const data = response?.data;
         setProducts(data);
-        setTotal(data.reduce((acc, product) => acc + product.quantity, 0));
+        console.log(data)
+        const total = data.reduce((acc, product) => acc + product.quantity, 0);
+        const formatted = new Intl.NumberFormat().format(total);
+        setTotal(formatted);
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -616,7 +621,7 @@ const ProductInventory = () => {
                               <input
                                 type="number"
                                 className="form-control"
-                                value={editableData?.totalPrice}
+                                value={editableData?.totalprice}
                                 onChange={(e) =>
                                   handleInputChange(
                                     index,
@@ -626,7 +631,7 @@ const ProductInventory = () => {
                                 }
                               />
                             ) : (
-                              product?.totalPrice
+                              product?.totalprice
                             )}
                           </td>
                           <td>

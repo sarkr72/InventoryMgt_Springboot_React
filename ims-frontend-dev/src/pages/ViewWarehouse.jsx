@@ -2,38 +2,55 @@ import React from 'react'
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { getWarehouse } from '../services/WarehouseService';
+import { deleteLocation } from '../services/LocationService';
+import { ToastContainer, toast } from "react-toastify";
 
 const ViewWarehouse = () => {
-    // const { product } = useParams();
+    const { id } = useParams();
     const [total, setTotal] = useState(0);
     const location = useLocation();
-    const { warehouse } = location.state || {};
+    // const { warehouse } = location.state || {};
     const navigate = useNavigate();
     const [locations, setLocations] = useState([]);
 
     useEffect(() => {
-        if(warehouse){
-            setLocations(warehouse?.locations);
-        }
-    }, [warehouse])  
- 
-    useEffect(()=>{
-        if(locations.length > 0){
-            const total =  locations.reduce((acc, location) => acc + location.stock, 0);
+        getLocations();
+    }, [])
+
+    useEffect(() => {
+        if (locations.length > 0) {
+            const total = locations.reduce((acc, location) => acc + location.stock, 0);
             setTotal(total);
         }
     }, [locations])
+
+    const getLocations = () => {
+        getWarehouse(id).then((response) => {
+            setLocations(response.data.locations);
+        })
+    }
 
     const handleClick = (location) => {
         navigate('/viewLocation', { state: { location } });
     }
     const addLocation = () => {
-        navigate('/addLocation');
+        navigate(`/addLocation`, { state: { id } });
     }
-    
-    const handleUpdate =(location)=>{
+
+    const handleUpdate = (location) => {
         navigate(`/updateLocation/${encodeURIComponent(JSON.stringify(location))}`);
-      }
+    }
+
+
+    const handleDelete = (id) => {
+        if (window.confirm("Are you sure you want to delete this item?")) {
+            deleteLocation(id).then((response) => {
+                getLocations();
+                toast.success("Location deleted successfully!");
+            })
+        }
+    };
 
     return (
         <div>
@@ -41,6 +58,7 @@ const ViewWarehouse = () => {
                 <h2>Locations Lists</h2>
                 <p>Warehouse Name: {" "}<span className='fw-bold'>warehouse1</span></p>
             </div>
+            <ToastContainer />
             <div className='m-5'>
                 <table style={{ maxWidth: '170vh' }} className="table table-hover table-bordered ">
                     <thead>
@@ -51,7 +69,7 @@ const ViewWarehouse = () => {
                             <th style={{ backgroundColor: "#3C3A7D" }} className=' text-white' scope="col">Max Capacity</th>
                             <th style={{ backgroundColor: "#3C3A7D" }} className=' text-white' scope="col">Available</th>
                             <th style={{ backgroundColor: "#3C3A7D" }} className=' text-white' scope="col">Stock</th>
-                            
+
                             <th style={{ backgroundColor: "#3C3A7D" }} className=' text-white' scope="col">Action</th>
                             {/* <th style={{backgroundColor: "#3C3A7D"}} className=' text-white' scope="col">Stock</th> */}
                         </tr>
@@ -68,7 +86,7 @@ const ViewWarehouse = () => {
                                     <td>{location?.stock}</td>
                                     <td className='d-flex flex-row'> <button style={{ marginLeft: "10px" }} onClick={() => handleClick(location)} className='btn bg-secondary border-0 text-white '>Open</button>
                                         <button style={{ marginLeft: "10px" }} onClick={() => handleUpdate(location)} className='btn bg-primary border-0 text-white '>Edit</button>
-                                        <button style={{ marginLeft: "10px" }} className='btn bg-danger border-0 text-white'>Delete</button>
+                                        <button disabled={location?.stock >= 1} onClick={()=>handleDelete(location.id)} style={{ marginLeft: "10px" }} className='btn bg-danger border-0 text-white'>Delete</button>
                                     </td>
                                 </tr>
                             </>

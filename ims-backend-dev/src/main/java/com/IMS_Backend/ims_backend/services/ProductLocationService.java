@@ -10,7 +10,11 @@ public interface ProductLocationService {
 	ProductLocation getProductLocationById(Long id);
 
 	List<ProductLocation> getAllProductLocations();
-
+	
+	List<ProductLocation> getProductLocationsByLocation(int row, int col, String wh, String company);
+	
+	List<ProductLocation> getProductLocationsByProduct(String product);
+	
 	ProductLocation updateProductLocation(Long productId, ProductLocation productLocation);
 
 	void deleteProductLocationById(Long id);

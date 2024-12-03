@@ -11,6 +11,8 @@ public interface ProductService {
     Product getProductById(Long ProductId);
 
     List<Product> getAllProducts();
+    
+    List<Product> getProductsByCompanyId(Long companyId);
 
     Product updateProduct(Long productId, Product product);
 

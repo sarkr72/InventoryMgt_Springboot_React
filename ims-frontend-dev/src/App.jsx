@@ -17,7 +17,7 @@ import AddCompany from "./pages/AddCompany";
 import ManageCompanies from "./pages/ManageCompanies";
 import ManageSuppliers from "./pages/ManageSuppliers";
 import AddSupplier from "./pages/AddSupplier";
-import ViewPurchaseOrder from "./pages/ViewPurchaseOrder";
+import PurchaseOrderList from "./pages/PurchaseOrderList";
 import CreatePurchaseOrder from "./pages/CreatePurchaseOrder";
 import Products from "./pages/Products";
 
@@ -37,7 +37,7 @@ function App() {
           <Route path="/profile" element={<ViewProfile />}></Route>
           <Route path="/productInventory" element={<ProductInventory />}></Route>
           <Route path="/manageWarehouses"element={<ManageWarehouses />}></Route>
-          <Route path="/viewWarehouse" element={<ViewWarehouse />}></Route>
+          <Route path="/viewWarehouse/:id" element={<ViewWarehouse />}></Route>
           <Route  path="/updateWarehouse/:warehouse"element={<AddWarehouse />}></Route>
           <Route path="/viewLocation" element={<ViewLocation />}></Route>
           <Route path="/addWarehouse" element={<AddWarehouse />}></Route>
@@ -51,7 +51,7 @@ function App() {
           <Route path="/updateSupplier/:updateSupplier" element={<AddSupplier />}></Route>
           <Route path="/addStock/:location" element={<AddProduct />}></Route>
           <Route path="/updateProductAtCurrentLocation/:updateProductAtCurrentLocation" element={<AddProduct />}></Route>
-          <Route path="/admin/purchaseOrder" element={<ViewPurchaseOrder />}></Route>
+          <Route path="/admin/purchaseOrderList" element={<PurchaseOrderList />}></Route>
           <Route path="/admin/createPurchaseOrder" element={<CreatePurchaseOrder />} ></Route>
           <Route path="/products" element={<Products />} ></Route>
         </Routes>
