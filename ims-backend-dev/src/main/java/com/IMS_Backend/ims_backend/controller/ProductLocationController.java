@@ -46,8 +46,8 @@ public class ProductLocationController {
 	}
 	
 	@GetMapping("/plByProduct")
-	public List<ProductLocation> getPLocations(@RequestParam("product") String product) {
-		return plService.getProductLocationsByProduct(product);
+	public List<ProductLocation> getPLocations(@RequestParam("product") String product, @RequestParam("company") String company) {
+		return plService.getProductLocationsByProduct(product, company);
 	}
 
 	@GetMapping

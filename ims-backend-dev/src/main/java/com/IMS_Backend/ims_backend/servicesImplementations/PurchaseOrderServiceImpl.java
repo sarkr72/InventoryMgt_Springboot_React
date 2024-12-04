@@ -46,6 +46,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
 		updateOrder.setCompany(order.getCompany());
 		updateOrder.setSupplier(order.getSupplier());
 		updateOrder.setEmployee(order.getEmployee());
+		updateOrder.setCompany(order.getCompany());
 		if (order.getProductNames() != null) {
 //			updateOrder.getProductNames().addAll(order.getProductNames());
 			for(String p : order.getProductNames()) {

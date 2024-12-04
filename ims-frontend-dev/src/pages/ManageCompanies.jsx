@@ -22,7 +22,7 @@ const ManageCompanies = () => {
   };
   const addcompany = () => {
     navigate("/addCompany");
-  };
+  }; 
 
   const handleUpdate = (updateCompany) => {
     navigate(
@@ -34,7 +34,7 @@ const handleDelete = (item) => {
      if(window.confirm("Are you sure you want to delete this item?")){
     deleteCompany(item?.id).then((response)=>{
         getCompanies();
-        toast.success("Company deleted successfully!");
+        toast.success(response.data);
     })}
 };
 

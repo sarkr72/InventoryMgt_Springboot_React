@@ -31,8 +31,8 @@ const ViewWarehouse = () => {
         })
     }
 
-    const handleClick = (location) => {
-        navigate('/viewLocation', { state: { location } });
+    const handleClick = (locationId) => {
+        navigate('/viewLocation', { state: { locationId } });
     }
     const addLocation = () => {
         navigate(`/addLocation`, { state: { id } });
@@ -84,7 +84,7 @@ const ViewWarehouse = () => {
                                     <td>{location?.maxCapacity}</td>
                                     <td>{location?.available}</td>
                                     <td>{location?.stock}</td>
-                                    <td className='d-flex flex-row'> <button style={{ marginLeft: "10px" }} onClick={() => handleClick(location)} className='btn bg-secondary border-0 text-white '>Open</button>
+                                    <td className='d-flex flex-row'> <button style={{ marginLeft: "10px" }} onClick={() => handleClick(location.id)} className='btn bg-secondary border-0 text-white '>Open</button>
                                         <button style={{ marginLeft: "10px" }} onClick={() => handleUpdate(location)} className='btn bg-primary border-0 text-white '>Edit</button>
                                         <button disabled={location?.stock >= 1} onClick={()=>handleDelete(location.id)} style={{ marginLeft: "10px" }} className='btn bg-danger border-0 text-white'>Delete</button>
                                     </td>

@@ -69,8 +69,8 @@ public class ProductLocationServiceImpl implements ProductLocationService{
 		}
 
 		@Override
-		public List<ProductLocation> getProductLocationsByProduct(String product) {
-			return productLocationRepository.findByProductName(product);
+		public List<ProductLocation> getProductLocationsByProduct(String product, String company) {
+			return productLocationRepository.findByProductNameAndCompany(product, company);
 		}
 
 

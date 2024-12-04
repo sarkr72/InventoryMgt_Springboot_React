@@ -20,9 +20,9 @@ const PurchaseOrderList = () => {
       unitPrice: 0,
       po: "",
       productNames: [""],
-      employee: { id: 0, fullName: "" },
-      supplier: { id: 0, name: "" },
-      company: { id: 0, name: "" },
+      employee: "",
+      supplier: "",
+      company: "",
     },
   ]);
 
@@ -73,8 +73,8 @@ const PurchaseOrderList = () => {
                 <td>{order.id}</td>
                 <td>{order.po}</td>
                 <td>{order.date}</td>
-                <td>{order.employee.fullName}</td>
-                <td>{order.supplier.name}</td>
+                <td>{order.employee}</td>
+                <td>{order.supplier}</td>
 
                 <td>
                   <button

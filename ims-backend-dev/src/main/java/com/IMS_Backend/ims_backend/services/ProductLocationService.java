@@ -13,7 +13,7 @@ public interface ProductLocationService {
 	
 	List<ProductLocation> getProductLocationsByLocation(int row, int col, String wh, String company);
 	
-	List<ProductLocation> getProductLocationsByProduct(String product);
+	List<ProductLocation> getProductLocationsByProduct(String product, String company);
 	
 	ProductLocation updateProductLocation(Long productId, ProductLocation productLocation);
 

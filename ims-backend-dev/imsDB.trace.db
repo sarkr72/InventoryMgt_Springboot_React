@@ -1113,3 +1113,33 @@ alter table if exists product add constraint FKisqe49svtrn2hbhm7lx8j59tu foreign
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1363)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1352)
 	at com.IMS_Backend.ims_backend.ImsBackendApplication.main(ImsBackendApplication.java:10)
+2024-12-03 16:07:41.110185-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "CHARACTER VARYING to DECFLOAT"; SQL statement:
+select p1_0.supplier,p1_0.id,p1_0.company,p1_0."date added",p1_0.employee,p1_0.po,p1_0.quantity,p1_0.supplier,p1_0.total_amount,p1_0.unit_prie from purchase_order p1_0 where p1_0.supplier=? [22018-224]
+2024-12-03 16:07:50.417392-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "CHARACTER VARYING to DECFLOAT"; SQL statement:
+select p1_0.supplier,p1_0.id,p1_0.company,p1_0."date added",p1_0.employee,p1_0.po,p1_0.quantity,p1_0.supplier,p1_0.total_amount,p1_0.unit_prie from purchase_order p1_0 where p1_0.supplier=? [22018-224]
+2024-12-03 16:08:18.689074-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "CHARACTER VARYING to DECFLOAT"; SQL statement:
+select p1_0.supplier,p1_0.id,p1_0.company,p1_0."date added",p1_0.employee,p1_0.po,p1_0.quantity,p1_0.supplier,p1_0.total_amount,p1_0.unit_prie from purchase_order p1_0 where p1_0.supplier=? [22018-224]
+2024-12-04 00:45:30.438839-05:00 jdbc[33]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "CHARACTER VARYING to DECFLOAT"; SQL statement:
+select p1_0.supplier,p1_0.id,p1_0.company,p1_0."date added",p1_0.employee,p1_0.po,p1_0.quantity,p1_0.supplier,p1_0.total_amount,p1_0.unit_prie from purchase_order p1_0 where p1_0.supplier=? [22018-224]
+2024-12-04 00:46:04.835904-05:00 jdbc[33]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "CHARACTER VARYING to DECFLOAT"; SQL statement:
+select p1_0.supplier,p1_0.id,p1_0.company,p1_0."date added",p1_0.employee,p1_0.po,p1_0.quantity,p1_0.supplier,p1_0.total_amount,p1_0.unit_prie from purchase_order p1_0 where p1_0.supplier=? [22018-224]
+2024-12-04 00:53:09.360741-05:00 jdbc[48]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "drop table [*]FROM SUPPLIER"; expected "identifier"; SQL statement:
+drop table FROM SUPPLIER [42001-224]
+2024-12-04 00:53:30.716353-05:00 jdbc[43]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUPPLIER_COMPANY" not found; SQL statement:
+select s1_0.id,s1_0.address,c1_0.supplier_id,c1_1.id,c1_1.address,c1_1.contact,c1_1.name,s1_0.contact,s1_0.name from supplier s1_0 left join supplier_company c1_0 on s1_0.id=c1_0.supplier_id left join companies c1_1 on c1_1.id=c1_0.company_id where s1_0.id=? [42102-224]
+2024-12-04 00:53:33.154553-05:00 jdbc[43]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SUPPLIER_COMPANY" not found; SQL statement:
+select s1_0.id,s1_0.address,c1_0.supplier_id,c1_1.id,c1_1.address,c1_1.contact,c1_1.name,s1_0.contact,s1_0.name from supplier s1_0 left join supplier_company c1_0 on s1_0.id=c1_0.supplier_id left join companies c1_1 on c1_1.id=c1_0.company_id where s1_0.id=? [42102-224]
+2024-12-04 00:54:43.273010-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "CHARACTER VARYING to DECFLOAT"; SQL statement:
+select p1_0.supplier,p1_0.id,p1_0.company,p1_0."date added",p1_0.employee,p1_0.po,p1_0.quantity,p1_0.supplier,p1_0.total_amount,p1_0.unit_prie from purchase_order p1_0 where p1_0.supplier=? [22018-224]
+2024-12-04 00:59:35.494012-05:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "CHARACTER VARYING to DECFLOAT"; SQL statement:
+select p1_0.supplier,p1_0.id,p1_0.company,p1_0."date added",p1_0.employee,p1_0.po,p1_0.quantity,p1_0.supplier,p1_0.total_amount,p1_0.unit_prie from purchase_order p1_0 where p1_0.supplier=? [22018-224]

@@ -1,19 +1,19 @@
 import React from 'react'
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { createProductLocation, listProductLocationsByLocation, updateProductLocation } from '../services/ProductLocations';
+import { createProductLocation, deleteProductLocation, listProductLocationsByLocation, updateProductLocation } from '../services/ProductLocations';
 import { useEffect } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import { productsList, productsListByCompany } from '../services/ProductService'
 import { listSuppliersById } from '../services/CompanyService';
 import { purchaseOrderListByCompany } from '../services/PurchaseOrderService';
-import { updateLocation } from '../services/LocationService';
+import { getLocation, updateLocation } from '../services/LocationService';
 
 const ViewLocation = () => {
   const [productLocations, setProductLocations] = useState([]);
   const navigate = useNavigate();
   const locations = useLocation();
-  const { location } = locations.state || null;
+  const { locationId } = locations.state || null;
   const [editingRow, setEditingRow] = useState(null);
   const [editableData, setEditableData] = useState([]);
   const [products, setProducts] = useState([]);
@@ -21,7 +21,9 @@ const ViewLocation = () => {
   const [pos, setPos] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
   const [total, setTotal] = useState(0);
-  
+  const [location, setLocation] = useState(null);
+  const [refresh, setRefresh] = useState(false);
+
   const [data, setData] = useState({
     supplier: "",
     quantity: "",
@@ -38,26 +40,32 @@ const ViewLocation = () => {
     id: "",
   });
   const [dataLocation, setDataLocation] = useState({
-  warehouse: {id: location.warehouseId},
+  warehouse: {id: ""},
   stock: 0, 
-  available: location.available,
-  id: location.id,
-  row: location.row,
-  col: location.col,
-  maxCapacity: location.maxCapacity, 
+  available: "",
+  id: "",
+  row: "",
+  col: "",
+  maxCapacity: "", 
   isEmpty: false,
   });
 
-  useEffect(() => {
-    if (location) {
-      
-      getPlByLocation(location?.row, location?.col, location?.warehouseName, localStorage.getItem("companyName"));
-      getProducts();
-      getSuppliers();
-      getPos();
-    }
-
-  }, [])
+ useEffect(() => {
+        const fetchData = async () => {
+            if (locationId) {
+                try {
+                    const response = await getLocation(locationId);
+                    const location = response.data;
+                    setDataLocation(location);
+                     getPlByLocation(location.row, location.col, location.warehouseName, localStorage.getItem("companyName"));
+                     getProducts();
+                     getSuppliers();
+                     getPos();
+                    setLocation(location);
+                } catch (error) {
+                    console.error('Error fetching data:', error);}} };
+        fetchData();
+    }, [locationId, refresh]);
 
   const getPlByLocation = (row, col, wh, company) => {
     listProductLocationsByLocation(row, col, wh, company).then((response) => {
@@ -114,10 +122,7 @@ const ViewLocation = () => {
   }
   const numericQuantity = parseFloat(quantity);
   const numericCurrentQty = parseFloat(currentQty);
-  setDataLocation((prevDataLocation) => ({
-    ...prevDataLocation,
-    location: location, 
-}));
+
 if(numericCurrentQty !== numericQuantity){
 
   dataLocation.available += numericCurrentQty;
@@ -131,11 +136,20 @@ if(numericCurrentQty !== numericQuantity){
   }
   }
 
+ const removeLocationStock =(quantity)=>{
+  const numericQuantity = parseFloat(quantity);
+  dataLocation.available += numericQuantity;
+  dataLocation.stock -= numericQuantity;
+  updateLocation(location.id, dataLocation).then((response) => {
+      // console.log(response.data);
+    })
+ }
+
   const handleInputChange = (index, name, value) => {
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+      setData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
   };
 
   const handleSave = async (e, item) => {
@@ -196,7 +210,6 @@ if(numericCurrentQty !== numericQuantity){
           .catch((error) => {
             toast.error(error.response.data);
           });
-        console.log(data)
         toast.success("Product added successfully!");
         setShowAdd(!showAdd);
         Object.keys(data).forEach((key) => {
@@ -214,6 +227,20 @@ if(numericCurrentQty !== numericQuantity){
     Object.keys(data).forEach((key) => {
       data[key] = "";
     });
+  };
+
+    const handleDelete = (item) => {
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      deleteProductLocation(item.id)
+        .then((response) => {
+          toast.success(response.data);
+          setRefresh(!refresh);
+        })
+        .catch((error) => {
+          toast.error(error);
+        });
+        removeLocationStock(item.quantity);
+    }
   };
 
   return (
@@ -417,7 +444,7 @@ if(numericCurrentQty !== numericQuantity){
                       Edit
                     </button>
                   )}
-                  <button style={{ marginLeft: "10px" }} className='btn bg-danger border-0 text-white'>Delete</button>
+                  <button style={{ marginLeft: "10px" }} onClick={()=>handleDelete(item)} className='btn bg-danger border-0 text-white'>Delete</button>
                 </td>
               </tr>
             ))}

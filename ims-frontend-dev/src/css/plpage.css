@@ -1,0 +1,8 @@
+input[type="date"] {
+    max-width: 90px; /* Set a fixed width */
+    height: 30px; /* Set a fixed height */
+    font-size: 13px; /* Adjust font size */
+    line-height: normal; /* Ensure normal line height */
+    border: 1px solid #ccc; /* Optional: customize border */
+    border-radius: 4px; /* Optional: customize border radius */
+  }

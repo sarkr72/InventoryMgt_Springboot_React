@@ -1,58 +1,65 @@
 import React from "react";
 import { useState } from "react";
-import {getEmployee} from '../services/EmployeeService'
+import { getEmployee } from "../services/EmployeeService";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LogIn = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPasswoed] = useState("");
-    const [employee, setEmployee] = useState("");
-    const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPasswoed] = useState("");
+  const [employee, setEmployee] = useState("");
+  const navigate = useNavigate();
 
-    const handleSubmit =(e)=>{
-      e.preventDefault();
-      getEmployee(email).then((response) =>{
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    getEmployee(email)
+      .then((response) => {
         const data = response.data;
         setEmployee(data);
         localStorage.clear();
         localStorage.setItem("companyName", data?.company?.name);
         localStorage.setItem("companyId", data?.companyId);
-        if(password.trim() === (data.password)){
-          navigate('/homepage');
+        localStorage.setItem("currentEmployeeEmail", data?.email);
+        if (password.trim() === data.password) {
+          navigate("/homepage");
         }
-    }).catch(error =>{
+      })
+      .catch((error) => {
         toast.error(error.response.data);
-    })
-      
-    }
+      });
+  };
 
-
-  const handleChange =(e)=>{
+  const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    if(name === "email"){
+    if (name === "email") {
       setEmail(value);
-    }else if(name === "password"){
+    } else if (name === "password") {
       setPasswoed(value);
     }
-  }
+  };
 
   return (
-    <div style={{ backgroundImage: `url(${"assets/images/inventory-management.jpg"})`, backgroundRepeat: 'no-repeat', backgroundSize:'cover'}}>
     <div
-      className="container-fluid d-flex justify-content-center align-items-center vh-100"
-      style={{ width: 1000, height: 500 }}
+      style={{
+        backgroundImage: `url(${"assets/images/inventory-management.jpg"})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}
     >
-       <ToastContainer />
       <div
-        className="card bg-light border-light shadow-lg"
-        style={{ width: '40%', maxWidth: '600px'}}
+        className="container-fluid d-flex justify-content-center align-items-center vh-100"
+        style={{ width: 1000, height: 500 }}
       >
-        <div className="card-body">
-          <h3 className="card-title text-center mb-4">Log In</h3>
-          <form onSubmit={handleSubmit}>
+        <ToastContainer />
+        <div
+          className="card bg-light border-light shadow-lg"
+          style={{ width: "40%", maxWidth: "600px" }}
+        >
+          <div className="card-body">
+            <h3 className="card-title text-center mb-4">Log In</h3>
+            <form onSubmit={handleSubmit}>
               <div data-mdb-input-init className="form-floating mb-3">
                 <input
                   type="email"
@@ -62,9 +69,7 @@ const LogIn = () => {
                   onChange={handleChange}
                   placeholder="Email Address"
                 />
-                <label className="form-label" >
-                  Email address
-                </label>
+                <label className="form-label">Email address</label>
               </div>
 
               <div data-mdb-input-init className="form-floating mb-3">
@@ -76,9 +81,7 @@ const LogIn = () => {
                   onChange={handleChange}
                   placeholder="Password"
                 />
-                <label className="form-label" >
-                  Password
-                </label>
+                <label className="form-label">Password</label>
               </div>
 
               <div className="row mb-4">
@@ -90,10 +93,7 @@ const LogIn = () => {
                       value=""
                       id="form2Example31"
                     />
-                    <label className="form-check-label" >
-                      {" "}
-                      Remember me{" "}
-                    </label>
+                    <label className="form-check-label"> Remember me </label>
                   </div>
                 </div>
 
@@ -116,7 +116,7 @@ const LogIn = () => {
           </div>
         </div>
       </div>
-      </div>
+    </div>
   );
 };
 
