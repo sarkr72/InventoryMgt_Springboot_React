@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteSupplier, listSupplier } from "../services/SupplierService";
 import { listSuppliersById } from "../services/CompanyService";
 import { ToastContainer, toast } from "react-toastify";
+import '../css/plpage.css';
 
 const ManageSuppliers = () => {
   const navigate = useNavigate();
@@ -63,13 +64,13 @@ const ManageSuppliers = () => {
                   <button
                     style={{ marginLeft: "10px" }}
                     onClick={() => handleUpdate(item)}
-                    className="btn bg-primary border-0 text-white "
+                    className="btn hover-over shadow bg-primary border-0 text-white "
                   >
                     Edit
                   </button>
                   <button
                     style={{ marginLeft: "10px" }}
-                    className="btn bg-danger border-0 text-white"
+                    className="btn bg-danger hover-over shadow border-0 text-white"
                     onClick={() => handleDelete(item)}
                   >
                     Delete

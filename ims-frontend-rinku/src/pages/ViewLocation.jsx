@@ -8,6 +8,7 @@ import { productsList, productsListByCompany } from '../services/ProductService'
 import { listSuppliersById } from '../services/CompanyService';
 import { purchaseOrderListByCompany } from '../services/PurchaseOrderService';
 import { getLocation, updateLocation } from '../services/LocationService';
+import '../css/plpage.css';
 
 const ViewLocation = () => {
   const [productLocations, setProductLocations] = useState([]);
@@ -423,7 +424,7 @@ if(numericCurrentQty !== numericQuantity){
                   {editingRow === index ? (
                     <>
                       <button
-                        className="btn btn-secondary btn-sm "
+                        className="btn btn-secondary shadow hover-over btn-sm "
                         name="cancel"
                         onClick={(e) => handleSave(e, item)}
                         style={{ marginRight: "5px" }}
@@ -431,7 +432,7 @@ if(numericCurrentQty !== numericQuantity){
                         Cancel
                       </button>
                       <button
-                        className="btn btn-success btn-sm"
+                        className="btn shadow hover-over btn-success btn-sm"
                         onClick={(e) => handleSave(e, item)}
                       >
                         Save
@@ -439,13 +440,13 @@ if(numericCurrentQty !== numericQuantity){
                     </>
                   ) : (
                     <button
-                      className="btn btn-primary btn-sm"
+                      className="btn shadow hover-over btn-primary btn-sm"
                       onClick={() => handleEdit(index)}
                     >
                       Edit
                     </button>
                   )}
-                  <button style={{ marginLeft: "10px" }} onClick={()=>handleDelete(item)} className='btn bg-danger border-0 text-white'>Delete</button>
+                  <button style={{ marginLeft: "10px" }} onClick={()=>handleDelete(item)} className='btn bg-danger shadow hover-over border-0 text-white'>Delete</button>
                 </td>
               </tr>
             ))}

@@ -23,7 +23,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "companies")
+@Table(name = "g3companies")
 public class Company {
 
 	@Id
@@ -53,7 +53,7 @@ public class Company {
 	private List<Product> products= new ArrayList<>();
 	
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)
-	@JoinTable(name = "supplier_company", joinColumns = @JoinColumn(name = "company_id"), inverseJoinColumns = @JoinColumn(name = "supplier_id"))
+	@JoinTable(name = "g3supplier_company", joinColumns = @JoinColumn(name = "company_id"), inverseJoinColumns = @JoinColumn(name = "supplier_id"))
 	@JsonIgnoreProperties("companies")
 	private Set<Supplier> suppliers = new HashSet<>();
 	

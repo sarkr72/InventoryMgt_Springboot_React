@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteWarehouse, listWarehousesByCompanyId } from "../services/WarehouseService";
 import { ToastContainer, toast } from "react-toastify";
+import "../css/plpage.css";
 
 const ManageWarehouses = () => {
   const navigate = useNavigate();
@@ -75,25 +76,25 @@ const ManageWarehouses = () => {
                   <button
                     style={{
                       marginLeft: "10px",
-                      backgroundColor: "#d0f1b9",
+                      backgroundColor: "#b8f48d",
                       color: "black",
                       fontWeight: 600,
                     }}
                     onClick={() => handleClick(item)}
-                    className="btn border-0 "
+                    className="btn border-0 hover-over shadow"
                   >
                     Open
                   </button>
                   <button
                     style={{ marginLeft: "10px" }}
                     onClick={() => handleUpdate(item)}
-                    className="btn bg-primary border-0 text-white "
+                    className="btn bg-primary hover-over shadow border-0 text-white "
                   >
                     Edit
                   </button>
                   <button
                     style={{ marginLeft: "10px" }}
-                    className="btn bg-danger border-0 text-white"
+                    className="btn bg-danger hover-over shadow border-0 text-white"
                     onClick={() => handleDelete(item.id)}
                   >
                     Delete

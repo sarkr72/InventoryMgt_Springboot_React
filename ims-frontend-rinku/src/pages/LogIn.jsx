@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { getEmployee } from "../services/EmployeeService";
+import { getEmployee, getRoles } from "../services/EmployeeService";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -13,35 +13,42 @@ const LogIn = () => {
   const [employee, setEmployee] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
   
-    await loginAPICall(email, password)
-      .then((response) => {
-        const token = "Basic " + window.btoa(email + ":" + password);
-        storeToken(token);
-        saveLoggedInUser(email);
+    try {
+      const loginResponse = await loginAPICall(email, password);
+      const token = "Basic " + window.btoa(email + ":" + password);
+      
+      storeToken(token);
+      saveLoggedInUser (email);
 
-      getEmployee(email).then((response) => {
-        const data = response.data;
-        setEmployee(data);
-        localStorage.clear();
-        localStorage.setItem("companyName", data?.company?.name);
-        localStorage.setItem("companyId", data?.companyId);
-        localStorage.setItem("currentEmployeeEmail", data?.email);
-        // if (password.trim() === data.password) {
-        //   navigate("/homepage");
-        // }
-      })
-      .catch((error) => {
-        toast.error(error.response.data);
-      });
-        navigate("/homepage");
-        window.location.reload(false);
-      })
-      .catch((error) => {
+      const employeeResponse = await getEmployee(email);
+      const data = employeeResponse.data;
+  
+      localStorage.setItem("companyName", data.company.name);
+      localStorage.setItem("companyId", data.companyId);
+      localStorage.setItem("currentEmployeeEmail", data.email);
+  
+      getRoles().then((response)=>{
+      localStorage.setItem("role", response.data[0])
+    })
+
+      navigate("/homepage");
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 401) {
+          toast.error("Invalid email or password. Please try again.");
+        } else if (error.response.status === 403) {
+          toast.error("Access denied. You do not have permission to log in.");
+        } else {
+          toast.error(error.response.data || "An error occurred during login.");
+        }
+      } else {
         console.error(error);
-      });
+        toast.error("An unexpected error occurred. Please try again later.");
+      }
+    }
   };
 
 

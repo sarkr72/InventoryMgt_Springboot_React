@@ -19,7 +19,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "product_locations")
+@Table(name = "g3product_locations")
 public class ProductLocation {
 
 	@Id

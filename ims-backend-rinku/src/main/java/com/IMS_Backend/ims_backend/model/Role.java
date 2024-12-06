@@ -3,7 +3,7 @@ package com.IMS_Backend.ims_backend.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "g3roles")
 public class Role {
 
     @Id

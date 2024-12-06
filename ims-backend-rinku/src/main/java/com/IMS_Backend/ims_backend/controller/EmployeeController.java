@@ -38,6 +38,7 @@ public class EmployeeController {
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
 	
+	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
 	@GetMapping("/roles")
     public ResponseEntity<Set<String>> getUserRoles(Principal principal) {
         Employee user = employeeService.findByEmail(principal.getName());

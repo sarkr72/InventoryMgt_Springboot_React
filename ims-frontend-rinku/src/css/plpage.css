@@ -6,3 +6,11 @@ input[type="date"] {
     border: 1px solid #ccc; /* Optional: customize border */
     border-radius: 4px; /* Optional: customize border radius */
   }
+.hover-over {
+    transition: transform 0.2s ease; 
+   color: #b8f48d;
+}
+
+.hover-over:hover {
+    transform: scale(1.05); 
+}

@@ -11,6 +11,6 @@ import com.IMS_Backend.ims_backend.model.Warehouse;
 
 @Repository
 public interface WarehouseRepository extends JpaRepository<Warehouse,Long>{
-	   @Query(value = "SELECT * FROM warehouse w WHERE w.company_id = :companyId", nativeQuery = true)
+	   @Query(value = "SELECT * FROM g3warehouse w WHERE w.company_id = :companyId", nativeQuery = true)
 	    List<Warehouse> findByCompanyId(@Param("companyId") Long companyId);
 }

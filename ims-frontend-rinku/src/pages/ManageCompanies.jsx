@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteCompany, listCompanies } from "../services/CompanyService";
 import { ToastContainer, toast } from "react-toastify";
+import '../css/plpage.css'
 
 const ManageCompanies = () => {
   const navigate = useNavigate();
@@ -68,13 +69,13 @@ const handleDelete = (item) => {
                   <button
                     style={{ marginLeft: "10px" }}
                     onClick={() => handleUpdate(item)}
-                    className="btn bg-primary border-0 text-white "
+                    className="btn bg-primary hover-over shadow border-0 text-white "
                   >
                     Edit
                   </button>
                   <button
                     style={{ marginLeft: "10px" }}
-                    className="btn bg-danger border-0 text-white"
+                    className="btn bg-danger border-0 hover-over shadow text-white"
                     onClick={()=>handleDelete(item)}
                   >
                     Delete

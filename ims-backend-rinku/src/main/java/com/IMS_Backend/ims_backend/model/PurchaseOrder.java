@@ -19,7 +19,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "PurchaseOrder")
+@Table(name = "g3PurchaseOrder")
 public class PurchaseOrder {
 
 	@Id
@@ -58,7 +58,7 @@ public class PurchaseOrder {
 	private String company;
 	
 	@ElementCollection
-	@CollectionTable(name = "purchase_order_products", joinColumns = @JoinColumn(name = "purchase_order_id"))
+	@CollectionTable(name = "g3purchase_order_products", joinColumns = @JoinColumn(name = "purchase_order_id"))
 	@Column(name = "product_name")
 	private Set<String> productNames = new HashSet<>();
 

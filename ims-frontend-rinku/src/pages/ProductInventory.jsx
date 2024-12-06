@@ -745,7 +745,7 @@ const ProductInventory = () => {
                             {editingRow === index ? (
                               <div className="d-flex flex-row">
                                 <button
-                                  className="btn btn-secondary btn-sm "
+                                  className="btn btn-secondary shadow hover-over btn-sm "
                                   name="cancel"
                                   onClick={(e) => handleSave(e, index)}
                                   style={{ marginRight: "5px" }}
@@ -753,7 +753,7 @@ const ProductInventory = () => {
                                   Cancel
                                 </button>
                                 <button
-                                  className="btn btn-success btn-sm "
+                                  className="btn btn-success shadow hover-over btn-sm "
                                   name="save"
                                   onClick={(e) => handleSave(e, index)}
                                 >
@@ -762,7 +762,7 @@ const ProductInventory = () => {
                               </div>
                             ) : (
                               <button
-                                className="btn btn-primary btn-sm"
+                                className="btn btn-primary shadow hover-over btn-sm"
                                 onClick={() => handleEdit(index)}
                               >
                                 Edit
@@ -771,7 +771,7 @@ const ProductInventory = () => {
                             {editingRow !== index && (
                               <button
                                 style={{ marginLeft: "5px" }}
-                                className="btn bg-danger border-0 text-white"
+                                className="btn bg-danger shadow hover-over border-0 text-white"
                                 onClick={() => handleDelete(product)}
                               >
                                 Delete

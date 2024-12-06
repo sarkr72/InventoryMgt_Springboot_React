@@ -5,6 +5,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getWarehouse } from '../services/WarehouseService';
 import { deleteLocation } from '../services/LocationService';
 import { ToastContainer, toast } from "react-toastify";
+import '../css/plpage.css';
 
 const ViewWarehouse = () => {
     const { id } = useParams();
@@ -84,9 +85,9 @@ const ViewWarehouse = () => {
                                     <td>{location?.maxCapacity}</td>
                                     <td>{location?.available}</td>
                                     <td>{location?.stock}</td>
-                                    <td className='d-flex flex-row'> <button style={{ marginLeft: "10px" }} onClick={() => handleClick(location.id)} className='btn bg-secondary border-0 text-white '>Open</button>
-                                        <button style={{ marginLeft: "10px" }} onClick={() => handleUpdate(location)} className='btn bg-primary border-0 text-white '>Edit</button>
-                                        <button disabled={location?.stock >= 1} onClick={() => handleDelete(location.id)} style={{ marginLeft: "10px" }} className='btn bg-danger border-0 text-white'>Delete</button>
+                                    <td className='d-flex flex-row'> <button style={{ marginLeft: "10px", backgroundColor: "#b8f48d" }} onClick={() => handleClick(location.id)} className='btn shadow hover-over border-0 text-black '>Open</button>
+                                        <button style={{ marginLeft: "10px" }} onClick={() => handleUpdate(location)} className='btn bg-primary border-0 shadow hover-over text-white '>Edit</button>
+                                        <button disabled={location?.stock >= 1} onClick={() => handleDelete(location.id)} style={{ marginLeft: "10px" }} className='btn shadow hover-over bg-danger border-0 text-white'>Delete</button>
                                     </td>
                                 </tr>
                             </>
@@ -98,7 +99,7 @@ const ViewWarehouse = () => {
                 >
                     <div className="mb-2" style={{ width: "100%" }}>
                         <button style={{ float: "right", maxWidth: "110px", marginLeft: "10px", width: "100%" }}  className="bg-secondary text-white mt-3"
-                            onClick={handleClick}
+                            onClick={addLocation}
                         >Add Location </button>
                         
                         {/* <div style={{ float: "right" }}> <button className='bg-secondary text-white mt-3' onClick={addLocation}>Add Location</button></div> */}

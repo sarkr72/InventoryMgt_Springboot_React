@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/homepage.css'
 import { useEffect } from 'react';
-import { deleteProduct, productsList, updateProduct } from '../services/ProductService';
+import { deleteProduct, productsList, productsListByCompany, updateProduct } from '../services/ProductService';
 import { ToastContainer, toast } from "react-toastify";
+import '../css/plpage.css'
 
 const Products = () => {
   const [showFilters, setShowFilters] = useState(false);
@@ -29,7 +30,7 @@ const Products = () => {
   }, [])
 
   const getProducts = () => {
-    productsList().then((response) => {
+    productsListByCompany(localStorage.getItem("companyId")).then((response) => {
       const data = response?.data;
       setProducts(data);
     }).catch(error => {
@@ -159,7 +160,7 @@ const Products = () => {
                     item?.category
                   )}
                 </td>
-                <td style={{ backgroundColor: "#d0f1b9", fontWeight: 640 }}>
+                <td style={{ fontWeight: 640 }}>
                   {" "}
                   {editingRow === index ? (
                     <>
@@ -205,9 +206,9 @@ const Products = () => {
                 </td>
 
                 <td className='d-flex flex-row' >
-                  <button name={editingRow === index ? "cancel" : "open"} style={{ fontWeight: 640, backgroundColor: editingRow === index ? "" : "#d0f1b9", color: editingRow === index ? "white" : "" }} onClick={(e) => handleClick(e, item)} className={` btn border-0 ${editingRow === index ? "bg-secondary" : ""}`}>{editingRow === index ? "Cancel" : "Open"}</button>
-                  <button name={editingRow === index ? "confirm" : "edit"} style={{ marginLeft: "10px" }} onClick={(e) => handleUpdate(e, index)} className={`btn ${editingRow === index ? "bg-success" : "bg-primary"}  border-0 text-white`}>{editingRow === index ? "Confirm" : "Edit"}</button>
-                  <button style={{ marginLeft: "10px" }} onClick={() => handleDelete(item)} className='btn bg-danger border-0 text-white'>Delete</button>
+                  <button name={editingRow === index ? "cancel" : "open"} style={{ fontWeight: 640, backgroundColor: editingRow === index ? "" : "#b8f48d", color: editingRow === index ? "white" : "", display:"flex" ,justifyContent: "center" }} onClick={(e) => handleClick(e, item)} className={` btn btn-outline shadow border-0 hover-over ${editingRow === index ? "bg-secondary" : ""}`}>{editingRow === index ? "Cancel" : "Open"}</button>
+                  <button name={editingRow === index ? "confirm" : "edit"} style={{ marginLeft: "10px" }} onClick={(e) => handleUpdate(e, index)} className={`btn ${editingRow === index ? "bg-success" : "bg-primary"} hover-over shadow border-0 text-white`}>{editingRow === index ? "Confirm" : "Edit"}</button>
+                  <button style={{ marginLeft: "10px" }} onClick={() => handleDelete(item)} className='btn bg-danger hover-over shadow border-0 text-white'>Delete</button>
                 </td>
               </tr>
             ))}

@@ -10,6 +10,6 @@ import com.IMS_Backend.ims_backend.model.Supplier;
 
 public interface SupplierRepository extends JpaRepository<Supplier,Long>{
 
-	@Query(value = "SELECT * FROM supplier s WHERE s.company_id = :companyId", nativeQuery = true)
+	@Query(value = "SELECT * FROM g3supplier s WHERE s.company_id = :companyId", nativeQuery = true)
     List<Supplier> findByCompanyId(@Param("companyId") Long companyId);
 }

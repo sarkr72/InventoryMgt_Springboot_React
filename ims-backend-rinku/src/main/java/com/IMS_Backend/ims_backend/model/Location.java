@@ -21,7 +21,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "location")
+@Table(name = "g3location")
 public class Location {
 
 	@Id
