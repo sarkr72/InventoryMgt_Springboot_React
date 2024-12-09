@@ -15,16 +15,6 @@ const Products = () => {
   const [editingRow, setEditingRow] = useState(null);
   const [editableData, setEditableData] = useState([]);
 
-  const [data, setData] = useState(
-    {
-      name: "",
-      category: "",
-      restockLevel: "",
-      unitPrice: ""
-    }
-
-  );
-
   useEffect(() => {
     getProducts();
   }, [])

@@ -9,12 +9,13 @@ public class RegisterDto {
     private String password;
     private String phone;
     private Company company;
+    private String role;
     
     public RegisterDto() {
     }
 
-	public RegisterDto(String firstName, String lastName, String email, String password, String phone,
-			Company company) {
+	public RegisterDto(String firstName, String lastName, String email, String password, String phone, Company company,
+			String role) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -22,9 +23,18 @@ public class RegisterDto {
 		this.password = password;
 		this.phone = phone;
 		this.company = company;
+		this.role = role;
 	}
 
 
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 	public String getFirstName() {
 		return firstName;

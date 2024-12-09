@@ -14,6 +14,7 @@ const ViewWarehouse = () => {
     // const { warehouse } = location.state || {};
     const navigate = useNavigate();
     const [locations, setLocations] = useState([]);
+    const[warehouse, setWarehouse] = useState("");
 
     useEffect(() => {
         getLocations();
@@ -29,6 +30,7 @@ const ViewWarehouse = () => {
     const getLocations = () => {
         getWarehouse(id).then((response) => {
             setLocations(response.data.locations);
+            setWarehouse(response.data.name);
         })
     }
 
@@ -57,7 +59,7 @@ const ViewWarehouse = () => {
         <div>
             <div className='offset-1'>
                 <h2>Locations Lists</h2>
-                <p>Warehouse Name: {" "}<span className='fw-bold'>warehouse1</span></p>
+                <p>Warehouse Name: {" "}<span className='fw-bold'>{warehouse}</span></p>
             </div>
             <ToastContainer />
             <div className='m-5' style={{ maxWidth: '170vh' }}>

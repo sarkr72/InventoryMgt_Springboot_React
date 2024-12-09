@@ -1,6 +1,7 @@
 import React from 'react'
 
 const AddForm = ({message, data, update, handleChange, handleSubmit}) => {
+  
    return (
      <div>
        <div style={{minWidth: "430px"}} className="text-white shadow-lg mb-5 mt-5 d-flex flex-column col-lg-3 col-md-6 m-auto bg-dark p-4 border rounded-3">

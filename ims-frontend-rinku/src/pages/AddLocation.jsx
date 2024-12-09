@@ -13,7 +13,8 @@ const AddLocation = () => {
     maxCapacity: "",
     warehouse: { id: 0 },
     stock: 0,
-    id: 0
+    id: 0,
+    available: 0
   }
   );
   const { location } = useParams();
@@ -61,6 +62,12 @@ const AddLocation = () => {
   }
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    if(name === 'maxCapacity'){
+      setData((prevData) => ({
+        ...prevData,
+        available: value,
+      }));
+    }
     setData((prevData) => ({
       ...prevData,
       [name]: value,

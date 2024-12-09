@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import CreatePurchaseOrder from "./CreatePurchaseOrder";
+import ViewPurchaseOrder from "./ViewPurchaseOrder";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
@@ -12,6 +13,15 @@ import {
 const PurchaseOrderList = () => {
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [openUpdateModal, setUpdateOpenModal] = useState(false);
+  const [openViewModal, setOpenViewModal] = useState(false);
+  const [viewModalData, setViewModalData] = useState({
+    po: "",
+    date: "",
+    employee: "",
+    supplier: "",
+    productNames: [""],
+  });
+
   const [orders, setOrders] = useState([
     {
       date: "",
@@ -25,6 +35,8 @@ const PurchaseOrderList = () => {
       company: "",
     },
   ]);
+
+  const modal = () => {};
 
   useEffect(() => {
     getOrders();
@@ -77,6 +89,17 @@ const PurchaseOrderList = () => {
                 <td>{order.supplier}</td>
 
                 <td>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      setOpenViewModal(true);
+                      setViewModalData(order);
+                    }}
+                    style={{ marginLeft: "15px" }}
+                  >
+                    View
+                  </Button>
+
                   <button
                     type="button"
                     className="btn btn-success"
@@ -117,6 +140,11 @@ const PurchaseOrderList = () => {
       <UpdatePurchaseOrder
         show={openUpdateModal}
         onHide={() => setUpdateOpenModal(false)}
+      />
+      <ViewPurchaseOrder
+        show={openViewModal}
+        onHide={() => setOpenViewModal(false)}
+        order={viewModalData}
       />
     </div>
   );

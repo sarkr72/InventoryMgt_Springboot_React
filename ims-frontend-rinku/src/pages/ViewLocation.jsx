@@ -24,6 +24,7 @@ const ViewLocation = () => {
   const [total, setTotal] = useState(0);
   const [location, setLocation] = useState(null);
   const [refresh, setRefresh] = useState(false);
+  const[warehouse, setWarehouse] = useState("");
 
   const [data, setData] = useState({
     supplier: "",
@@ -63,6 +64,7 @@ const ViewLocation = () => {
                      getSuppliers();
                      getPos();
                     setLocation(location);
+                    setWarehouse(location.warehouseName)
                 } catch (error) {
                     console.error('Error fetching data:', error);}} };
         fetchData();
@@ -250,7 +252,7 @@ if(numericCurrentQty !== numericQuantity){
         <div className='d-flex flex-row align-items-center '>
           <ToastContainer />
           <p style={{ maxHeight: "40px", fontWeight: 700, fontSize: 20 }}>Products at: </p>
-          <p style={{ maxHeight: "40px", marginLeft: "10px", marginTop: "4px", fontWeight: 500 }}>Row: {location?.row} Column: {location?.col}</p>
+          <p style={{ maxHeight: "40px", marginLeft: "10px", marginTop: "4px", fontWeight: 500 }}>Warehouse: {warehouse}{", "}Row: {location?.row} Column: {location?.col}</p>
         </div>
         <div className="table-responsive" style={{ width: "100%" }}>
         <table className="table table-collapse table-hover table-bordered table-responsive">

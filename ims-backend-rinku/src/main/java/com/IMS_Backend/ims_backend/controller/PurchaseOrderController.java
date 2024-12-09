@@ -28,14 +28,14 @@ public class PurchaseOrderController {
 	@Autowired
 	private PurchaseOrderService purchaseOrderService;
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+	@PreAuthorize("hasRole( 'MANAGER')")
 	@PostMapping
 	public ResponseEntity<PurchaseOrder> createOrder(@RequestBody PurchaseOrder order){
 		PurchaseOrder createPO = purchaseOrderService.createOrder(order);
 		return new ResponseEntity<>(createPO, HttpStatus.CREATED);
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
+	@PreAuthorize("hasAnyRole( 'MANAGER', 'EMPLOYEE')")
 	@GetMapping("/{id}")
 	public ResponseEntity<PurchaseOrder> getPurchaseOrder(@PathVariable("id") Long id){
 		PurchaseOrder searchedPO = purchaseOrderService.getOrderById(id);
@@ -43,28 +43,28 @@ public class PurchaseOrderController {
 		
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
+	@PreAuthorize("hasAnyRole( 'MANAGER', 'EMPLOYEE')")
 	@GetMapping("/posByCompany/{id}")
 	public ResponseEntity<List<PurchaseOrder>> getPosByCompany(@PathVariable("id") String name){
 		List<PurchaseOrder> allPurchaseOrders = purchaseOrderService.getOrdersByCompany(name);
 		return new ResponseEntity<>(allPurchaseOrders, HttpStatus.CREATED);
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
+	@PreAuthorize("hasAnyRole( 'MANAGER', 'EMPLOYEE')")
 	@GetMapping
 	public ResponseEntity<List<PurchaseOrder>> getAllPurchaseOrders(){
 		List<PurchaseOrder> allPurchaseOrders = purchaseOrderService.getAllOrders();
 		return new ResponseEntity<>(allPurchaseOrders, HttpStatus.CREATED);
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+	@PreAuthorize("hasRole( 'MANAGER')")
 	@PutMapping("/{id}")
 	public ResponseEntity<PurchaseOrder> updatePurchaseOrder(@PathVariable("id") Long id, @RequestBody PurchaseOrder purchaseOrder){
 		PurchaseOrder updatePurchaseOrder = purchaseOrderService.updateOrder(id, purchaseOrder);
 		return new ResponseEntity<>(updatePurchaseOrder, HttpStatus.CREATED);
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+	@PreAuthorize("hasRole( 'MANAGER')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deletePurchaseOrder (@PathVariable("id") Long id) {
 		purchaseOrderService.deleteOrderById(id);

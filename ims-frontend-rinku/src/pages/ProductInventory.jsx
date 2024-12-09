@@ -67,7 +67,8 @@ const ProductInventory = () => {
     // getWarehouses();
     const id = localStorage.getItem("companyId");
     getSuppliers(id);
-    getPos(id);
+    getPos(localStorage.getItem("companyName"));
+    console.log(id)
     // getTotal();
     // setCompanyId(localStorage.getItem("companyName"));
   }, []);
@@ -104,6 +105,7 @@ const ProductInventory = () => {
       .then((response) => {
         const data = response?.data;
         setPos(data);
+        console.log(data)
       })
       .catch((error) => {
         toast.error(error.response.data);
@@ -274,7 +276,6 @@ const ProductInventory = () => {
   // };
 
   const handleClick = () => {
-    console.log(total);
     if (showAdd) {
       console.log("here", data);
       const hasNull = Object.entries(data)
@@ -287,6 +288,7 @@ const ProductInventory = () => {
           .then((response) => {
             setProducts([...products, response?.data]);
             updateLocaitonStock(data.quantity, 0);
+            getProductInventory();
           })
           .catch((error) => {
             toast.error(error.response.data);
@@ -376,7 +378,7 @@ const ProductInventory = () => {
         <h2>Product Inventory</h2>
         <p>
           Product Name: <span className="fw-bold">{product.name}</span>
-          {", "}Unit Price: <span className="fw-bold"> {product.name}</span>
+          {/* {", "}Unit Price: <span className="fw-bold"> {product.unitPrice}</span> */}
         </p>
       </div>
       <ToastContainer />

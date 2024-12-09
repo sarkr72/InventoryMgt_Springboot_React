@@ -61,7 +61,7 @@ public class CompanyController {
 		return ResponseEntity.ok(companys);
 	}
 	
-	@PreAuthorize("hasRole('ADMIN)")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<Company> updatecompany(@PathVariable("id") Long id, @RequestBody Company company){
 		Company updatedcompany = companyService.updateCompany(id, company);
@@ -69,7 +69,7 @@ public class CompanyController {
 		return new ResponseEntity<>(updatedcompany, HttpStatus.CREATED);
 	}
 	
-	@PreAuthorize("hasRole('ADMIN)")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deletecompany(@PathVariable("id") Long id){
 		companyService.deleteCompanyById(id);

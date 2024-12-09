@@ -12,26 +12,20 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom/dist";
 import { getRoles } from "../services/EmployeeService";
 import { isUserLoggedIn, logout } from "../services/AuthService";
-// import logo from '../assets/images/logo.png'
-// import { useDispatch, useSelector } from "react-redux";
-// import { logout } from "../actions/userActions";
+import { AppContext } from "./AppProvider";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons'; // Import the icon you want to use
+
 
 const Header = () => {
   const navigate = useNavigate();
-  // const userLogin = useSelector((state) => state.userLogin);
-  // const { userInfo } = userLogin;
-  const [roles, setRoles] = useState(null);
   const isAuth = isUserLoggedIn();
-
-  useEffect(() => {
-    if (!roles) {
-      setRoles(localStorage.getItem("role"));
-    }
-  }, []);
-
+  const { role } = React.useContext(AppContext);
+  const name = JSON.parse(localStorage.getItem("user"))?.data?.firstName?.toUpperCase();
+  console.log(name)
   const logoutHandler = () => {
     logout();
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -51,34 +45,26 @@ const Header = () => {
             <img
               src="/assets/images/logo2.png"
               alt=" "
+              className="rounded-2"
               style={{ width: "30px", height: "30px" }}
             />{" "}
             IMS
           </Navbar.Brand>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            {/* <SearchBox /> */}
-            <Nav className="ml-auto">
+          <Navbar.Collapse id="basic-navbar-nav" className="ml-auto">
+            <Nav className=" ml-auto" style={{ right: 5, marginLeft: 'auto', position: "relative" }} >
               {isAuth && (
                 <>
                   <LinkContainer to="/homepage">
-                    <Nav.Link>Home</Nav.Link>
+                    <Nav.Link>HOME</Nav.Link>
                   </LinkContainer>
-                  <NavDropdown title="Name" id="username">
-                    <LinkContainer to="/profile">
-                      <NavDropdown.Item>Profile</NavDropdown.Item>
-                    </LinkContainer>
 
-                    <NavDropdown.Item onClick={logoutHandler}>
-                      Logout
-                    </NavDropdown.Item>
-                  </NavDropdown>
                 </>
               )}
               {!isAuth && (
                 <>
-                  <LinkContainer to="/">
+                  <LinkContainer to="/login">
                     <Nav.Link>
                       <i className="fas fa-user"></i>Login
                     </Nav.Link>
@@ -87,9 +73,9 @@ const Header = () => {
               )}
 
               {isAuth && (
-                <NavDropdown title="Admin" id="adminmenue">
-                  {(roles === "ROLE_ADMIN" ||
-                    roles === "ROLE_MANAGER") && (
+                <NavDropdown title={role.split("_")[1]} id="adminmenue">
+                  {(role === "ROLE_ADMIN" ||
+                    role === "ROLE_MANAGER") && (
                       <>
                         <LinkContainer to="/admin/registerUser">
                           <NavDropdown.Item>Register User</NavDropdown.Item>
@@ -99,13 +85,13 @@ const Header = () => {
                         </LinkContainer>
                       </>
                     )}
-                  {roles === "ROLE_ADMIN" && (
+                  {role === "ROLE_ADMIN" && (
                     <LinkContainer to="/manageCompanies">
                       <NavDropdown.Item>Companies</NavDropdown.Item>
                     </LinkContainer>
                   )}
-                  {(roles === "ROLE_MANAGER" ||
-                    roles === "ROLE_EMPLOYEE") && (
+                  {(role === "ROLE_MANAGER" ||
+                    role === "ROLE_EMPLOYEE") && (
                       <>
                         <LinkContainer to="/manageWarehouses">
                           <NavDropdown.Item>Warehouses</NavDropdown.Item>
@@ -125,6 +111,20 @@ const Header = () => {
                     )}
                 </NavDropdown>
               )}
+              {isAuth && (
+                <>
+                  <NavDropdown title={<span> <FontAwesomeIcon icon={faUser} /> {name} </span>} id="username">
+                    <LinkContainer to="/profile">
+                      <NavDropdown.Item>Profile</NavDropdown.Item>
+                    </LinkContainer>
+                    <NavDropdown.Item onClick={logoutHandler}>
+                      Logout
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </>
+              )}
+
+
             </Nav>
           </Navbar.Collapse>
         </Container>

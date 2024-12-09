@@ -23,6 +23,7 @@ import Products from "./pages/Products";
 import { isUserLoggedIn } from "./services/AuthService";
 import { getRoles } from "./services/EmployeeService";
 import { useEffect, useState } from "react";
+import WelcomePage from "./pages/WelcomePage";
 
 function App() {
 
@@ -49,7 +50,9 @@ function App() {
       {/* <InactivityWrapper /> */}
         <Header />
         <Routes>
-          <Route path="/" element={<LogIn />}></Route>
+        <Route path="/" element={<WelcomePage />}></Route>
+
+          <Route path="/login" element={<LogIn />}></Route>
 
           <Route path="/admin/registerUser" element={<AuthenticatedRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}><UserRegistration /></AuthenticatedRoute>}></Route>
 
@@ -62,7 +65,7 @@ function App() {
           <Route path="/updateProductAtCurrentLocation/:updateProductAtCurrentLocation" element={<AuthenticatedRoute allowedRoles={['ROLE_MANAGER', 'ROLE_EMPLOYEE']}><AddProduct /></AuthenticatedRoute>}></Route>
           <Route path="/products" element={<AuthenticatedRoute allowedRoles={['ROLE_MANAGER', 'ROLE_EMPLOYEE']}><Products /></AuthenticatedRoute>} ></Route>
 
-          <Route path="/admin/manageAccounts" element={<AuthenticatedRoute allowedRoles={[ 'ROLE_MANAGER']}><ManageAccount /></AuthenticatedRoute>}></Route>
+          <Route path="/admin/manageAccounts" element={<AuthenticatedRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER']}><ManageAccount /></AuthenticatedRoute>}></Route>
 
           <Route path="/profile" element={<AuthenticatedRoute allowedRoles={['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_EMPLOYEE']}><ViewProfile /></AuthenticatedRoute>}></Route>
           {/* warehouse */}

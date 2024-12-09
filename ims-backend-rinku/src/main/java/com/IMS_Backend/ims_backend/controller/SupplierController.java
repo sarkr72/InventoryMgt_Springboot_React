@@ -27,14 +27,14 @@ public class SupplierController {
 	@Autowired
 	private SupplierService supplierService;
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+	@PreAuthorize("hasAnyRole( 'MANAGER')")
 	@PostMapping
     public ResponseEntity<Supplier> createSupplier(@RequestBody Supplier supplier){
         Supplier savedSupplier = supplierService.createSupplier(supplier);
         return new ResponseEntity<>(savedSupplier, HttpStatus.CREATED);
     }
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
 	@GetMapping("/{id}")
 	public ResponseEntity<Supplier> getSupplier(@PathVariable("id") Long id){
 		Supplier supplier = supplierService.getSupplierById(id);
@@ -42,7 +42,7 @@ public class SupplierController {
 		return new ResponseEntity<>(supplier, HttpStatus.CREATED);
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
+	@PreAuthorize("hasAnyRole( 'MANAGER', 'EMPLOYEE')")
 	@GetMapping("/companySuppliers/{id}")
 	public ResponseEntity<List<Supplier>> getSuppliersByCompany(@PathVariable("id") Long id){
 		List<Supplier> suppliers = supplierService.getSuppliersByCompanyId(id);
@@ -50,7 +50,7 @@ public class SupplierController {
 		return ResponseEntity.ok(suppliers);
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
 	@GetMapping
 	public ResponseEntity<List<Supplier>> getAllsuppliers(){
 		List<Supplier> suppliers = supplierService.getAllSuppliers();
@@ -58,7 +58,7 @@ public class SupplierController {
 		return ResponseEntity.ok(suppliers);
 	}
 	
-	@PreAuthorize("hasRole('ADMIN', 'MANAGER')")
+	@PreAuthorize("hasRole( 'MANAGER')")
 	@PutMapping("/{id}")
 	public ResponseEntity<Supplier> updateSupplier(@PathVariable("id") Long id, @RequestBody Supplier supplier){
 		Supplier updatedSupplier = supplierService.updateSupplier(id, supplier);
@@ -66,7 +66,7 @@ public class SupplierController {
 		return new ResponseEntity<>(updatedSupplier, HttpStatus.CREATED);
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+	@PreAuthorize("hasRole('MANAGER')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteSupplier(@PathVariable("id") Long id){
 		supplierService.deleteSupplierById(id);

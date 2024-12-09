@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -8,38 +7,21 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
 import '../css/homepage.css'
+import { AppContext } from '../components/AppProvider';
 
 function NavScrollExample() {
   const [showFilters, setShowFilters] = useState(false);
   const [input, setInput] = useState("");
   const navigate = useNavigate();
-  const initState = [
-    { id: 1, warehouse: "wh3", name: "name1", category: "cat1", mfg: "2024-11-19", exp: "2024-11-19", supplier: "cupboar1", Quantity: 500, TotalPrice: 500.55, Location: "row1 col2", batch: "batch", PO: "2023-0321", Invenytory: 851 },
-    { id: 2, name: "name2", mfg: "brea1", exp: 55, supplier: "cupboar2", Quantity: 500, TotalPrice: 500.55, Location: "row1 col2", batch: "batch", PO: "po", Invenytory: 8451 },
-    { id: 2, name: "name3", mfg: "bread2", exp: 10, supplier: "cupboard3", Quantity: 500, TotalPrice: 500.55, Location: "row1 col2", batch: "batch", PO: "po", Invenytory: 1465 },
-  ];
+  const { role } = React.useContext(AppContext);
 
   const onChange = (e) => {
     setShowFilters(true);
     setInput(e.target.value);
   }
 
-  const handleClick = (product) => {
-    // navigate(`/productInventory/${product}`);
-    navigate('/productInventory', { state: { product } });
-  }
-
-  const addProduct = () => {
-    navigate("/admin/addProduct");
-  }
-
-  const handleUpdate = (updateProduct) => {
-    navigate(`/admin/addProduct/${encodeURIComponent(JSON.stringify(updateProduct))}`, { state: { updateProduct } });
-  }
-
   return (
-    <div style={{ minHeight: '100vh' }}>
-
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(to bottom, #f5f5f5, #e0e0e0)' }}>
       <div className="input-group d-flex m-auto mt-2" style={{ maxWidth: '600px' }}>
         <input onChange={(e) => { onChange(e) }} type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
         <button type="button" className="btn btn-outline-primary" data-mdb-ripple-init>search</button>
@@ -64,47 +46,80 @@ function NavScrollExample() {
       )}
 
       <div className="container d-flex flex-wrap justify-content-around mt-5 mb-5">
-        <div className="card" style={{ width: "15rem", height: "20rem", marginBottom: "2rem" }}>
-          <img className="card-img-top" src="/assets/images/manageAccount.png" alt="Card image cap" />
-          <div className="card-body">
-            <button onClick={() => navigate('/admin/manageAccounts')} type="button" className="btn btn-primary">Manage Account</button>
-          </div>
-        </div>
+        {(role === "ROLE_ADMIN" || role === "ROLE_MANAGER") && (
+          <>
+          <div className="card bg-dark text-white shadow-lg border-5" style={{ width: "18rem", height: "22rem", marginBottom: "2rem", borderRadius: "10px" }}>
+              <img className="card-img-top rounded-top" style={{ height: "60%",  borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }} src="/assets/images/addUser.jpg" alt="Add Product" />
+              <div className="card-body d-flex flex-column justify-content-center align-items-center" style={{ padding: "1.5rem" }}>
+                 <h5 className="card-title text-center mb-3" style={{ fontWeight: "bold"}}>Register User</h5>
+                <button onClick={() =>  navigate('/admin/registerUser')} type="button" className="btn btn-primary w-100" style={{ borderRadius: "25px", padding: "0.6rem 1rem", fontSize: "0.9rem", fontWeight: "500", textTransform: "uppercase" }}>Register User</button>
+              </div>
+            </div>
+          
+            <div className="card bg-dark text-white shadow-lg border-5" style={{ width: "18rem", height: "22rem", marginBottom: "2rem", borderRadius: "10px" }}>
+              <img className="card-img-top rounded-top" style={{ height: "60%",  borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }} src="/assets/images/manageAccount.png" alt="Add Product" />
+              <div className="card-body d-flex flex-column justify-content-center align-items-center" style={{ padding: "1.5rem" }}>
+                 <h5 className="card-title text-center mb-3" style={{ fontWeight: "bold"}}>Accounts</h5>
+                <button onClick={() =>  navigate('/admin/manageAccounts')} type="button" className="btn btn-primary w-100" style={{ borderRadius: "25px", padding: "0.6rem 1rem", fontSize: "0.9rem", fontWeight: "500", textTransform: "uppercase" }}>Accounts</button>
+              </div>
+            </div>
 
-        <div className="card" style={{ width: "15rem", height: "20rem", marginBottom: "2rem" }}>
-          <img className="card-img-top" src="/assets/images/addProduct.png" alt="Card image cap" />
-          <div className="card-body">
-            <button onClick={() => navigate('/admin/addProduct')} type="button" className="btn btn-primary">Add Product</button>
-          </div>
-        </div>
+          </>
+        )}
 
-        <div className="card" style={{ width: "15rem", height: "20rem", marginBottom: "2rem" }}>
-          <img className="card-img-top" src="/assets/images/addUser.jpg" alt="Card image cap" />
-          <div className="card-body">
-            <button onClick={() => navigate('/admin/registerUser')} type="button" className="btn btn-primary">Register User</button>
-          </div>
-        </div>
+        {(role === "ROLE_ADMIN") && (
+          <>
+          <div className="card bg-dark text-white shadow-lg border-5" style={{ width: "18rem", height: "22rem", marginBottom: "2rem", borderRadius: "10px" }}>
+              <img className="card-img-top rounded-top" style={{ height: "60%",  borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }} src="/assets/images/manageAccount.png" alt="Add Product" />
+              <div className="card-body d-flex flex-column justify-content-center align-items-center" style={{ padding: "1.5rem" }}>
+                 <h5 className="card-title text-center mb-3" style={{ fontWeight: "bold"}}>Companies</h5>
+                <button onClick={() =>  navigate('/manageCompanies')} type="button" className="btn btn-primary w-100" style={{ borderRadius: "25px", padding: "0.6rem 1rem", fontSize: "0.9rem", fontWeight: "500", textTransform: "uppercase" }}>Companies</button>
+              </div>
+            </div>
 
-        <div className="card" style={{ width: "15rem", height: "20rem", marginBottom: "2rem" }}>
-          <img className="card-img-top" src="/assets/images/viewWarehouse.jpg" alt="Card image cap" />
-          <div className="card-body">
-            <button onClick={() => navigate('/manageWarehouses')} type="button" className="btn btn-primary">View Warehouse</button>
-          </div>
-        </div>
+          </>
+        )}
 
-        <div className="card" style={{ width: "15rem", height: "20rem", marginBottom: "2rem" }}>
-          <img className="card-img-top" src="/assets/images/purchaseOrder.png" alt="Card image cap" />
-          <div className="card-body">
-            <button onClick={() => navigate('/admin/purchaseOrder')} type="button" className="btn btn-primary">Create Purchase Order</button>
-          </div>
-        </div>
+        {(role === "ROLE_MANAGER" || role === "ROLE_EMPLOYEE") && (
+          <>
+       
+           <div className="card bg-dark text-white shadow-lg border-5" style={{ width: "18rem", height: "22rem", marginBottom: "2rem", borderRadius: "10px" }}>
+              <img className="card-img-top rounded-top" style={{ height: "60%",  borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }} src="/assets/images/viewWarehouse.jpg" alt="Add Product" />
+              <div className="card-body d-flex flex-column justify-content-center align-items-center" style={{ padding: "1.5rem" }}>
+                 <h5 className="card-title text-center mb-3" style={{ fontWeight: "bold"}}>Warehouses</h5>
+                <button onClick={() => navigate('/manageWarehouses')} type="button" className="btn btn-primary w-100" style={{ borderRadius: "25px", padding: "0.6rem 1rem", fontSize: "0.9rem", fontWeight: "500", textTransform: "uppercase" }}> warehouses</button>
+              </div>
+            </div>
 
-        <div className="card" style={{ width: "15rem", height: "20rem", marginBottom: "2rem" }}>
-          <img className="card-img-top" src="/assets/images/purchaseOrder.png" alt="Card image cap" />
-          <div className="card-body">
-            <button onClick={() => navigate('/products')} type="button" className="btn btn-primary">Products</button>
-          </div>
-        </div>
+          
+
+            <div className="card bg-dark text-white shadow-lg border-5" style={{ width: "18rem", height: "22rem", marginBottom: "2rem", borderRadius: "10px" }}>
+              <img className="card-img-top rounded-top" style={{ height: "60%",  borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }} src="/assets/images/addProduct.jpg" alt="Add Product" />
+              <div className="card-body d-flex flex-column justify-content-center align-items-center" style={{ padding: "1.5rem" }}>
+                 <h5 className="card-title text-center mb-3" style={{ fontWeight: "bold"}}>Products</h5>
+                <button onClick={() =>  navigate('/products')} type="button" className="btn btn-primary w-100" style={{ borderRadius: "25px", padding: "0.6rem 1rem", fontSize: "0.9rem", fontWeight: "500", textTransform: "uppercase" }}>Products</button>
+              </div>
+            </div>
+
+            <div className="card bg-dark text-white shadow-lg border-5" style={{ width: "18rem", height: "22rem", marginBottom: "2rem", borderRadius: "10px" }}>
+              <img className="card-img-top rounded-top" style={{ height: "60%",  borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }} src="/assets/images/viewWarehouse.jpg" alt="Add Product" />
+              <div className="card-body d-flex flex-column justify-content-center align-items-center" style={{ padding: "1.5rem" }}>
+                 <h5 className="card-title text-center mb-3" style={{ fontWeight: "bold"}}>Suppliers</h5>
+                <button onClick={() => navigate('/manageSuppliers')} type="button" className="btn btn-primary w-100" style={{ borderRadius: "25px", padding: "0.6rem 1rem", fontSize: "0.9rem", fontWeight: "500", textTransform: "uppercase" }}>suppliers</button>
+              </div>
+            </div>
+
+          <div className="card bg-dark text-white shadow-lg border-5" style={{ width: "18rem", height: "22rem", marginBottom: "2rem", borderRadius: "10px" }}>
+              <img className="card-img-top rounded-top" style={{ height: "60%",  borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }} src="/assets/images/purchaseOrder.png" alt="Add Product" />
+              <div className="card-body d-flex flex-column justify-content-center align-items-center" style={{ padding: "1.5rem" }}>
+                 <h5 className="card-title text-center mb-3" style={{ fontWeight: "bold"}}> Purchase Orders</h5>
+                <button onClick={() => navigate('/admin/purchaseOrder')} type="button" className="btn btn-primary w-100" style={{ borderRadius: "25px", padding: "0.6rem 1rem", fontSize: "0.9rem", fontWeight: "500", textTransform: "uppercase" }}>Purchase Orders</button>
+              </div>
+            </div>
+          </>
+        )}
+
+
 
       </div>
     </div>
