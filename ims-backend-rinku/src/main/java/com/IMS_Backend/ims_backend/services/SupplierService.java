@@ -10,6 +10,8 @@ public interface SupplierService {
 	
 	Supplier getSupplierById(Long supplierId);
 	
+	Supplier getSupplierByName(String name);
+	
  	List<Supplier> getAllSuppliers();
 
  	List<Supplier> getSuppliersByCompanyId(Long id);

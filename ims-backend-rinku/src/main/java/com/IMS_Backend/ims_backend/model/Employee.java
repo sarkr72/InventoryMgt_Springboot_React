@@ -57,7 +57,7 @@ public class Employee {
 	
 	@ManyToOne
     @JoinColumn(name = "company_id", nullable=false)
-	@JsonIgnoreProperties({"employees", "address", "contact", "employees", "warehouses", "suppliers", "companyId"})
+	@JsonIgnoreProperties({"employees", "employees", "warehouses", "suppliers", "companyId"})
 	private Company company;
     
 //	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)

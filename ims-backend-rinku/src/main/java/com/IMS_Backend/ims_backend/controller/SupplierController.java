@@ -42,6 +42,14 @@ public class SupplierController {
 		return new ResponseEntity<>(supplier, HttpStatus.CREATED);
 	}
 	
+	@PreAuthorize("hasAnyRole('MANAGER', 'EMPLOYEE')")
+	@GetMapping("/name/{name}")
+	public ResponseEntity<Supplier> getSupplierName(@PathVariable("name") String name){
+		Supplier supplier = supplierService.getSupplierByName(name);
+		
+		return new ResponseEntity<>(supplier, HttpStatus.CREATED);
+	}
+	
 	@PreAuthorize("hasAnyRole( 'MANAGER', 'EMPLOYEE')")
 	@GetMapping("/companySuppliers/{id}")
 	public ResponseEntity<List<Supplier>> getSuppliersByCompany(@PathVariable("id") Long id){

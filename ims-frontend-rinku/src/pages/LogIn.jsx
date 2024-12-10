@@ -33,8 +33,7 @@ const LogIn = () => {
       localStorage.setItem("user", JSON.stringify({data}));
       localStorage.setItem("companyName", data.company.name);
       localStorage.setItem("companyId", data.companyId);
-      localStorage.setItem("currentEmployeeEmail", data.email);
-
+      localStorage.setItem("company", JSON.stringify(data.company));
       // Uncomment if roles are needed
       // const rolesResponse = await getRoles();
       // localStorage.setItem("role", rolesResponse.data[0]);

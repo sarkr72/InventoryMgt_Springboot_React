@@ -4,10 +4,13 @@ import { deleteSupplier, listSupplier } from "../services/SupplierService";
 import { listSuppliersById } from "../services/CompanyService";
 import { ToastContainer, toast } from "react-toastify";
 import '../css/plpage.css';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const ManageSuppliers = () => {
   const navigate = useNavigate();
   const [suppliers, setSuppliers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     getSuppliers();
@@ -29,6 +32,10 @@ const ManageSuppliers = () => {
     );
   };
 
+  const filteredSuppliers = suppliers.filter((supplier) =>
+    `${supplier.name}`.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   const handleDelete = (item) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
       deleteSupplier(item?.id).then((response) => {
@@ -42,6 +49,13 @@ const ManageSuppliers = () => {
     <div className="container">
       <h2 className="container">Supplier Lists</h2>
       <ToastContainer />
+
+      <Row>
+        <div as={Col} className="container d-flex mb-5" style={{ maxWidth: '600px' }}>
+          <input onChange={(e) => setSearchTerm(e.target.value)} type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+          <button type="button" className="btn btn-primary" data-mdb-ripple-init >search</button>
+        </div>
+      </Row>
       <div className="container mt-5">
         <table className="table table-hover table-bordered table-collapse">
           <thead>
@@ -54,7 +68,7 @@ const ManageSuppliers = () => {
             </tr>
           </thead>
           <tbody>
-            {suppliers?.map((item) => (
+            {filteredSuppliers?.map((item) => (
               <tr key={item?.id}>
                 <td>{item?.id}</td>
                 <td>{item?.name}</td>

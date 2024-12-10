@@ -36,7 +36,6 @@ const PurchaseOrderList = () => {
     },
   ]);
 
-  const modal = () => {};
 
   useEffect(() => {
     getOrders();
@@ -134,7 +133,7 @@ const PurchaseOrderList = () => {
         <CreatePurchaseOrder
           show={openCreateModal}
           onHide={() => setOpenCreateModal(false)}
-          getOrders={() => getOrders()}
+          getorders={() => getOrders()}
         />
       </div>
       <UpdatePurchaseOrder

@@ -10,11 +10,15 @@ public interface ProductService {
 
     Product getProductById(Long ProductId);
 
+    Product getProductByName(String name);
+    
     List<Product> getAllProducts();
     
     List<Product> getProductsByCompanyId(Long companyId);
 
     Product updateProduct(Long productId, Product product);
 
+    Product updateProductByName(String name, Product product);
+    
     void deleteProductById(Long productId);
 }

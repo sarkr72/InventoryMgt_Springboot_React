@@ -17,6 +17,7 @@ const AddProduct = () => {
     category: "",
     restockLevel: "",
     unitPrice: "",
+    quantity: 0,
     company: {id: localStorage.getItem("companyId")}
   });
 
@@ -31,7 +32,7 @@ const AddProduct = () => {
         navigate("/products");
         toast.success("Product Added Successfully!");
       }).catch((error)=>{
-        console.log(error)
+        toast.error(error.response.data);
       })
     }
   };

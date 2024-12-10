@@ -45,6 +45,14 @@ public class ProductController {
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
+	@GetMapping("/name/{name}")
+	public ResponseEntity<Product> getProduct(@PathVariable("name") String name){
+		Product searchedProduct= productService.getProductByName(name);
+		
+		return new ResponseEntity<>(searchedProduct, HttpStatus.CREATED);
+	}
+	
+	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
 	@GetMapping("/company/{companyId}")
     public List<Product> getProductsByCompanyId(@PathVariable Long companyId) {
 	        return productService.getProductsByCompanyId(companyId);
@@ -62,6 +70,14 @@ public class ProductController {
 	@PutMapping("/{id}")
 	public ResponseEntity<Product> updatecompany(@PathVariable("id") Long id, @RequestBody Product product){
 		Product updatedProduct = productService.updateProduct(id, product);
+		
+		return new ResponseEntity<>(updatedProduct, HttpStatus.CREATED);
+	}
+	
+	@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER', 'EMPLOYEE')")
+	@PutMapping("/name/{name}")
+	public ResponseEntity<Product> updateProductWithName(@PathVariable("name") String name, @RequestBody Product product){
+		Product updatedProduct = productService.updateProductByName(name, product);
 		
 		return new ResponseEntity<>(updatedProduct, HttpStatus.CREATED);
 	}

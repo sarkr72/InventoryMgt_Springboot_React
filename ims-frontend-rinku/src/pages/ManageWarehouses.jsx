@@ -3,10 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { deleteWarehouse, listWarehousesByCompanyId } from "../services/WarehouseService";
 import { ToastContainer, toast } from "react-toastify";
 import "../css/plpage.css";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const ManageWarehouses = () => {
   const navigate = useNavigate();
   const [warehouses, setWarehouses] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     getWarehouses();
@@ -33,19 +36,32 @@ const ManageWarehouses = () => {
     );
   };
 
+  //filter warehouses by name or other criterias
+  const filteredWarehouse = warehouses.filter((warehouse) =>
+    `${warehouse.name}`.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
-    deleteWarehouse(id).then((response)=>{
-      getWarehouses();
-      toast.success("Supplier deleted successfully!");
-    })}
+      deleteWarehouse(id).then((response) => {
+        getWarehouses();
+        toast.success("Supplier deleted successfully!");
+      })
+    }
   };
 
   return (
     <div className="container">
       <h2 className="container mb-3">Warehouse Lists</h2>
       <div className="m-5">
-      <ToastContainer />
+        <ToastContainer />
+        <Row>
+          
+          <div as={Col} className="container d-flex mb-5" style={{ maxWidth: '600px' }}>
+            <input onChange={(e) => setSearchTerm(e.target.value)} type="search" className="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+            <button type="button" className="btn btn-primary" data-mdb-ripple-init >search</button>
+          </div>
+        </Row>
         <table className="table table-hover table-bordered">
           <thead>
             <tr key={"header"}>
@@ -57,7 +73,7 @@ const ManageWarehouses = () => {
             </tr>
           </thead>
           <tbody>
-            {warehouses?.map((item) => (
+            {filteredWarehouse?.map((item) => (
               <tr key={item?.id}>
                 <td>{item?.id}</td>
                 <td

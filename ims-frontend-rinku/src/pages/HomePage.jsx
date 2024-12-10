@@ -70,7 +70,7 @@ function NavScrollExample() {
         {(role === "ROLE_ADMIN") && (
           <>
           <div className="card bg-dark text-white shadow-lg border-5" style={{ width: "18rem", height: "22rem", marginBottom: "2rem", borderRadius: "10px" }}>
-              <img className="card-img-top rounded-top" style={{ height: "60%",  borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }} src="/assets/images/manageAccount.png" alt="Add Product" />
+              <img className="card-img-top rounded-top" style={{ height: "60%",  borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }} src="/assets/images/companies.png" alt="Add Product" />
               <div className="card-body d-flex flex-column justify-content-center align-items-center" style={{ padding: "1.5rem" }}>
                  <h5 className="card-title text-center mb-3" style={{ fontWeight: "bold"}}>Companies</h5>
                 <button onClick={() =>  navigate('/manageCompanies')} type="button" className="btn btn-primary w-100" style={{ borderRadius: "25px", padding: "0.6rem 1rem", fontSize: "0.9rem", fontWeight: "500", textTransform: "uppercase" }}>Companies</button>
@@ -94,7 +94,7 @@ function NavScrollExample() {
           
 
             <div className="card bg-dark text-white shadow-lg border-5" style={{ width: "18rem", height: "22rem", marginBottom: "2rem", borderRadius: "10px" }}>
-              <img className="card-img-top rounded-top" style={{ height: "60%",  borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }} src="/assets/images/addProduct.jpg" alt="Add Product" />
+              <img className="card-img-top rounded-top" style={{ height: "60%",  borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }} src="/assets/images/addProduct.png" alt="Add Product" />
               <div className="card-body d-flex flex-column justify-content-center align-items-center" style={{ padding: "1.5rem" }}>
                  <h5 className="card-title text-center mb-3" style={{ fontWeight: "bold"}}>Products</h5>
                 <button onClick={() =>  navigate('/products')} type="button" className="btn btn-primary w-100" style={{ borderRadius: "25px", padding: "0.6rem 1rem", fontSize: "0.9rem", fontWeight: "500", textTransform: "uppercase" }}>Products</button>

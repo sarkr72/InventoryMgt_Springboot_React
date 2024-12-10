@@ -21,7 +21,7 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "name", unique=true)
+	@Column(name = "name")
 	private String name;
 
 	@Column(name = "category")
@@ -33,11 +33,13 @@ public class Product {
 	@Column(name = "unitPrice")
 	private double unitPrice;
 
+	@Column(name = "quantity")
+	private int quantity;
+
 	@ManyToOne
-    @JoinColumn(name = "company_id", nullable=false)
-	@JsonIgnoreProperties({"products", "address", "contact", "employees", "warehouses", "suppliers", "companyId"})
+	@JoinColumn(name = "company_id", nullable = false)
+	@JsonIgnoreProperties({ "products", "address", "contact", "employees", "warehouses", "suppliers", "companyId" })
 	private Company company;
-	
 
 //	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 //	@JoinTable(name = "product_purchaseOrder", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "purchaseOrder_id"))
@@ -45,23 +47,20 @@ public class Product {
 
 //	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private Set<ProductLocation> productLocations = new HashSet<>();
-	
+
 	public Product() {
 
 	}
 
-
-public Product(String name, String category, int restockLevel, double unitPrice, Company company) {
-	super();
-	this.name = name;
-	this.category = category;
-	this.restockLevel = restockLevel;
-	this.unitPrice = unitPrice;
-	this.company = company;
-}
-
-
-
+	public Product(String name, String category, int restockLevel, double unitPrice, int quantity, Company company) {
+		super();
+		this.name = name;
+		this.category = category;
+		this.restockLevel = restockLevel;
+		this.unitPrice = unitPrice;
+		this.quantity = quantity;
+		this.company = company;
+	}
 
 //	public Set<ProductLocation> getProductLocations() {
 //		return productLocations;
@@ -79,16 +78,21 @@ public Product(String name, String category, int restockLevel, double unitPrice,
 //		this.pos = pos;
 //	}
 
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
 	public Company getCompany() {
-	return company;
-}
+		return company;
+	}
 
-
-public void setCompany(Company company) {
-	this.company = company;
-}
-
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 
 	public Long getId() {
 		return id;
@@ -125,18 +129,20 @@ public void setCompany(Company company) {
 	public void setUnitPrice(double unitPrice) {
 		this.unitPrice = unitPrice;
 	}
-	
-	  @Override
-	    public boolean equals(Object o) {
-	        if (this == o) return true; 
-	        if (o == null || getClass() != o.getClass()) return false; 
-	        Product product = (Product) o;
-	        return Objects.equals(id, product.id); 
-	    }
 
-	    @Override
-	    public int hashCode() {
-	        return Objects.hash(id); 
-	    }
-	    
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Product product = (Product) o;
+		return Objects.equals(id, product.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
 }

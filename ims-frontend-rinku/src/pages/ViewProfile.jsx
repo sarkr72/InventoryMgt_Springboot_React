@@ -13,17 +13,17 @@ import {
 } from "../services/EmployeeService";
 import { ToastContainer, toast } from "react-toastify";
 
+
 function ChangePassword(props) {
   const [currPassword, setCurrPwrd] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPwrd] = useState("");
 
-  const handleChangeCurrPassword = (e) => setCurrPwrd(e.target.value);
   const handleChangeNewPassword = (e) => setNewPassword(e.target.value);
   const handleChangeConfirmPassword = (e) => setConfirmPwrd(e.target.value);
 
   const verifyPassword = () => {
-    if (props.employee.password === currPassword) {
+    console.log(newPassword)
       if (newPassword === confirmPassword) {
         const newEmployee = {
           id: props.employee.id,
@@ -32,26 +32,30 @@ function ChangePassword(props) {
           email: props.employee.email,
           password: newPassword,
           phone: props.employee.phone,
-          role: props.employee.role,
-          company: {
-            id: props.employee.company.id,
-            name: props.employee.company.name,
-          },
-          fullName: props.employee.fullName,
-          companyId: props.employee.companyId,
-        };
+          roles: [
+            {
+              id: props.employee.roles[0].id,
+              name: props.employee.roles[0].name
+            }
+          ],
+          companyId: {
+            id: localStorage.getItem("companyId")
+          }
+        }
         if (window.confirm("Confirm to change password")) {
           updateEmployee(props.employee.id, newEmployee).then((response) => {
             toast.success("Password successfully updated");
-          });
+          }).catch((error)=>{
+            toast.error("Failed to change password");
+          }
+          )
         }
-      } else {
-        toast.error("New password and confirm password are different");
       }
-    } else {
-      toast.error("Current password is wrong");
+    else {
+      toast.error("Password do not match")
     }
-  };
+  }
+
 
   return (
     <Modal
@@ -60,6 +64,7 @@ function ChangePassword(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
+      <ToastContainer/>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           Change Password
@@ -67,46 +72,26 @@ function ChangePassword(props) {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Group className="mb-3" controlId="formCurrentPassword">
-            <Form.Label>Current Password</Form.Label>
-            <Form.Control
-              type="password"
-              value={currPassword}
-              onChange={handleChangeCurrPassword}
-              placeholder="Enter current password"
-            />
-          </Form.Group>
 
           <Form.Group className="mb-3" controlId="formNewPassword">
             <Form.Label>New Password</Form.Label>
-            <Form.Control
-              type="password"
-              value={newPassword}
-              onChange={handleChangeNewPassword}
-              placeholder="New Password"
-            />
+            <Form.Control type="password" value={newPassword} onChange={handleChangeNewPassword} placeholder="New Password" />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formConfirmPassword">
             <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type="password"
-              value={confirmPassword}
-              onChange={handleChangeConfirmPassword}
-              placeholder="Confirm Password"
-            />
+            <Form.Control type="password" value={confirmPassword} onChange={handleChangeConfirmPassword} placeholder="Confirm Password" />
           </Form.Group>
           <Button variant="primary" type="submit" onClick={verifyPassword}>
             Submit
           </Button>
         </Form>
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
     </Modal>
   );
 }
+
+
 
 const ViewProfile = () => {
   const data = JSON.parse(localStorage.getItem("user"))?.data;
@@ -125,7 +110,7 @@ const ViewProfile = () => {
     if (window.confirm("Confirm to update profile")) {
       updateEmployee(employee.id, employee).then((response) => {
         const data = response.data;
-        localStorage.setItem("user", JSON.stringify({data}));
+        localStorage.setItem("user", JSON.stringify({ data }));
         toast.success("Profile successfully updated");
         // getEmployees();
       });
@@ -157,7 +142,7 @@ const ViewProfile = () => {
       }}
     >
       <ToastContainer />
-      <h3 className="titlePage">Employee Profile</h3>
+      <h3 className="titlePage">Your Profile</h3>
 
       <div className="BasicInfo">
         <h4>Your Info</h4>
@@ -196,17 +181,7 @@ const ViewProfile = () => {
 
             <Form.Group as={Col} controlId="formPosition">
               <Form.Label>Position</Form.Label>
-              {localStorage.getItem("role") === "ROLE_MANAGER" && (
-                <>
-                  <Form.Select
-                    value={localStorage.getItem("role")}
-                    onChange={handleChange}
-                  >
-                    <option value="ROLE_MANAGER"></option>
-                    <option value="ROLE_EMPLOYEE"></option>
-                  </Form.Select>
-                </>
-              )}
+              {localStorage.getItem("role")}
               <Form.Control
                 type="text"
                 value={localStorage.getItem("role")}

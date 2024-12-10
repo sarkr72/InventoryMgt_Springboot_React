@@ -59,14 +59,17 @@ public class EmployeeServicesImpl implements EmployeeService {
 		if(employee.getPassword() != null) {
 			savedEmployee.setPassword(passwordEncoder.encode(employee.getPassword()));
 		}
-		
 		savedEmployee.setPhone(employee.getPhone());
+		
+		System.out.println(employee);
 		if (employee.getRoles().size() > 0) {
 			Set<Role> roles = new HashSet<>();
 			Role userRole = roleRepository.findByName(new ArrayList<>(employee.getRoles()).get(0).getName());
 			roles.add(userRole);
+			savedEmployee.setRoles(roles);
 			System.out.println(userRole);
 		}
+		
 		Employee updatedEmployee = employeeRepository.save(savedEmployee);
 
 		return updatedEmployee;

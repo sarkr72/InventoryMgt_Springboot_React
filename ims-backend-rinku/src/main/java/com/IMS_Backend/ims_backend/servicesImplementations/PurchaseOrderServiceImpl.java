@@ -1,6 +1,8 @@
 package com.IMS_Backend.ims_backend.servicesImplementations;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,11 +21,19 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService{
 	private PurchaseOrderRepository purchaseOrderRepo;
 	
 	@Autowired
-	private ProductRepository productOrderRepo;
+	private ProductRepository productsRepo;
 
 	
 	@Override
 	public PurchaseOrder createOrder(PurchaseOrder order) {
+//		order.getProductNames().stream().forEach(item -> {
+//	        Product product = productsRepo.findProductByName(item).orElseThrow(()->new NotFoundException("Not found 11"));
+//	        
+//	        if (product != null) {
+//	            product.setQuantity(order?.getQuantity() + 1); 
+//	            product.setUnitPrice(product.getUnitPrice()); 
+//	        }
+//	    });
 		return purchaseOrderRepo.save(order);
 	}
 

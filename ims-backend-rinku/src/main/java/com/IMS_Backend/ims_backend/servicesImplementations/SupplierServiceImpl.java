@@ -53,6 +53,13 @@ public class SupplierServiceImpl implements SupplierService {
 	}
 
 	@Override
+	public Supplier getSupplierByName(String name) {
+		Supplier supplier = supplierRepository.findSupplierByName(name)
+				.orElseThrow(() -> new NotFoundException("Supplier is not found with id: " + name));
+		return supplier;
+	}
+	
+	@Override
 	public List<Supplier> getAllSuppliers() {
 		return supplierRepository.findAll();
 	}

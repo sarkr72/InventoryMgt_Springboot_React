@@ -38,7 +38,7 @@ public class PurchaseOrder {
 //	@Column(name = "unitPrie", nullable = false)
 //	private double unitPrice;
 	
-	@Column(name = "po", nullable = false, unique=true)
+	@Column(name = "po", nullable = false)
 	private String po;
 
 //	@ManyToOne(optional = false)
